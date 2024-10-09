@@ -1,0 +1,50 @@
+// ширина контейнера из макета
+$container-width: 1200;
+// отступы безопасности для контейнера
+$main-offset: 15;
+// максимальная ширина страницы
+$max-width: 1920;
+// минимальная ширина телефона
+$min-width: 320;
+// ширина контейнера с учетом padding слева и справа
+$max-width-container: $container-width + ($main-offset * 2);
+// $max-width-container: $container-width ;
+// $header-height: 100;
+// $footer-height: 100;
+
+:root {
+	--container-width: 1200px;
+	--container-padding: 15px;
+
+	// ------------ Fonts Vars -------------
+	--font-main: "Inter", sans-serif;
+	--font-main-size: 16px;
+	--font-main-weight: 400;
+	--font-accent: 'Manrope', sans-serif;
+	--font-titles: var(--font-accent);
+
+	// ------------ Colors Vars -------------
+	--color-main: #000;
+	--color-main-hover: #2d2d2d;	
+	--color-main-btn: violet;
+	--color-main-btn-hover: rgb(197, 46, 197);
+	--color-accent: #ac182c;
+	--color-accent-hover:#be5b5b;
+	--color-link: #2578c8;
+	--color-white: #fff;
+	--color-black: #131313;
+	--color-page-bg: #fff;
+	
+	
+	--transition: 0.3s ease-in-out;
+	--radius: rem(4);	
+	
+	--shadow: 0 0 0 2px #00f;
+	--shadow-hover: 0 0 5px 0 #{rgba(#000, 10%)}, 0 0 10px 0 #{rgba(#000, 10%)}, 0 0 15px 0 #{rgba(#000, 10%)};
+	
+}
+
+.dark {
+    --color-page-bg: #252526;
+    --color-main: #fff;
+}

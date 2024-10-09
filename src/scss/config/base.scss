@@ -1,0 +1,123 @@
+@import "functions";
+@import "mixins";
+
+/** Базовые анимации: */
+@import "keyframes";
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: var(--color-page-bg);
+	color: var(--color-main);
+	font-family: var(--font-main);
+	text-wrap: balance;
+}
+
+img {
+	display: block;
+}
+
+code {
+	padding: 0.2rem;
+	border-radius: var(--radius);
+}
+
+pre.code {
+	overflow-x: auto;
+	// background-color: #e9f1f6;
+	padding: 1rem;
+	border-radius: var(--radius);
+}
+//-----------------------------------------------Фул скрин для тач --------------------------------------------------------
+[data-fullscreen] {
+	min-block-size: 100vb;
+
+	.touch & {
+		min-block-size: calc(var(--vb, 1vb) * 100);
+
+		@include media-mx(768) {
+			transition: block-size var(--transition);
+		}
+	}
+}
+// ---------------------------------------- Скролл бар настройки ----------------------------------------------------------
+* {
+	&::-webkit-scrollbar {
+		inline-size: rem(8);
+		background-color: var(--color-white);
+	}
+
+	&::-webkit-scrollbar-track {
+		border-radius: var(--radius);
+		box-shadow: inset 0 0 rem(6) rgba(#000, 20%);
+		background: #eee;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: var(--radius);
+		border: 0 none #fff;
+		background-color: var(--color-main);
+
+		@include any-hover {
+			background-color: var(--color-main-hover);
+		}
+	}
+}
+//-------------------------------------- Приставка для секций container -------------------------------------------------------------
+[class*="__container"] {
+	margin-inline: auto;
+	max-inline-size: rem($max-width-container);
+	padding-inline: rem($main-offset);
+}
+
+// ====================================== Стили отзывчивых картинок (IBG) ===========================================================
+.ibg {
+	position: relative;
+
+	img {
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		object-fit: cover;
+		block-size: 100%;
+		inline-size: 100%;
+	}
+
+	&_contain {
+		img {
+			object-fit: contain;
+		}
+	}
+}
+
+// ===================================================== Оболочка ===================================================================
+.wrapper {
+	display: flex;
+	min-block-size: 100%;
+
+	/** Поменять на clip - если используется в проекте position: sticky */
+	overflow: hidden;
+	flex-direction: column;
+}
+
+.page {
+	position: relative;
+	flex: 1 1 auto;
+
+	[data-observ] {
+		pointer-events: none;
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		block-size: rem(2);
+		inline-size: 100%;
+		background: transparent;
+	}
+
+	// &_start {
+	// 	padding-block-start: rem($header-height);
+	// }
+}
+// ------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,324 @@
+// Заголовки, общие БЄМ блоки и прочее...
+
+.close,
+.none {
+	display: none !important;
+}
+
+.open,
+.hover {
+	display: block !important;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0;
+	padding: 0;
+	white-space: nowrap;
+	clip-path: inset(100%);
+	clip: rect(0 0 0 0);
+	overflow: hidden;
+}
+
+.no-scroll {
+	overflow-y: hidden;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+//----------------------------------------------- Containers -----------------------------------------------------------------------
+.container {
+	margin-inline: auto;
+	max-inline-size: rem($max-width-container);
+	padding-inline: rem($main-offset);
+}
+
+.container-full {
+	padding: 0 var(--container-padding);
+	max-width: 100%;
+}
+
+.container-left-50 {
+	padding: 0 var(--container-padding);
+	max-width: 50%;
+
+	@include mobile {
+		max-width: 100%;
+	}
+}
+
+.container-right-50 {
+	padding: 0 var(--container-padding);
+	max-width: 50%;
+	margin-left: auto;
+
+	@include mobile {
+		max-width: 100%;
+	}
+}
+
+.container-right {
+	padding-left: calc((100% - var(--container-width)) / 2 + var(--container-padding));
+
+	@include tablet {
+		padding-left: var(--container-padding);
+	}
+}
+
+.container-left {
+	padding-right: calc((100% - var(--container-width)) / 2 + var(--container-padding));
+
+	@include tablet {
+		padding-right: var(--container-padding);
+	}
+}
+
+.container-half-left {
+	padding-right: calc((100% - var(--container-width)) / 2 + (var(--container-width) / 2));
+	padding-left: calc((100% - var(--container-width)) / 2 + var(--container-padding));
+
+	@include tablet {
+		padding-left: var(--container-padding);
+	}
+
+	@include mobile {
+		padding: 0 var(--container-padding);
+	}
+}
+
+.container-half-right {
+	padding-left: calc((100% - var(--container-width)) / 2 + (var(--container-width) / 2));
+	padding-right: calc((100% - var(--container-width)) / 2 + var(--container-padding));
+
+	@include tablet {
+		padding-right: var(--container-padding);
+	}
+
+	@include mobile {
+		padding: 0 var(--container-padding);
+	}
+}
+
+//------------------------------------------------------ Grid Ingrid ---------------------------------------------------------------
+
+.grid {
+	// width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-left: rem(- $main-offset);
+	margin-right: rem(- $main-offset);
+}
+
+.ingrid-1 {
+	width: 100%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-2 {
+	width: 50%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-3 {
+	width: 33.333%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-4 {
+	width: 25%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-5 {
+	width: 20%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-6 {
+	width: 16.666%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-7 {
+	width: 14.285%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-8 {
+	width: 12.5%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-9 {
+	width: 11.111%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-11 {
+	width: 9.090%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-12 {
+	width: 8.333%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+//---------------
+.ingrid-10 {
+	width: 10%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-20 {
+	width: 20%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-30 {
+	width: 30%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-40 {
+	width: 40%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-50 {
+	width: 50%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-60 {
+	width: 60%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-70 {
+	width: 70%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-80 {
+	width: 80%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-80 {
+	width: 80%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-90 {
+	width: 90%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+.ingrid-100 {
+	width: 100%;
+	height: 100%;
+	padding-left: rem($main-offset);
+	padding-right: rem($main-offset);
+}
+
+//----------------------------------------------------------Paddings and bred ----------------------------------------------------
+.pd5 {
+	padding: rem(15);
+}
+
+.pd10 {
+	padding: rem(10);
+}
+
+.pd15 {
+	padding: rem(15);
+}
+
+.pd20 {
+	padding: rem(20);
+}
+
+.pd25 {
+	padding: rem(25);
+}
+
+.pd30 {
+	padding: rem(30);
+}
+
+.bred {
+	border: 1px solid red;
+}
+
+//--------------------------------------------------------- Buttons ---------------------------------------------------------------
+.btn {
+	display: block;
+	width: 100%;
+	padding: 1rem;
+	background-color: rgb(234, 234, 234);
+	color: black;
+	border: 1px solid #000;
+}
