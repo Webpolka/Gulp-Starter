@@ -1,0 +1,35 @@
+// ---------------------------------------------------- HTML ---------------------------------------------------------------- 
+//
+// <section class="section-breadcrumbs">
+//     <div class="container">
+//         <div class="breadcrumbs">
+//             <a href="#">Главная</a><span> / </span>
+//             <a href="#" class="active"> Каталог</a>
+//         </div>
+//     </div>
+// </section>
+//
+// ---------------------------------------------------- SCSS ---------------------------------------------------------------
+
+.section-breadcrumbs {
+    background-color: var(--color-white);
+
+    .breadcrumbs {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        a {
+            font-size: rem(16);
+            line-height: rem(26);
+            font-weight: 400;
+            color: var(--color-black);
+
+            &.active {
+                color: var(--color-main);
+            }
+            &:hover{
+                color: var(--color-main-hover);
+            }
+        }
+    }
+}
+

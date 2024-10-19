@@ -7,7 +7,14 @@
 html {
 	scroll-behavior: smooth;
 }
-
+html{
+	@include adaptive-clamp(font-size, 16 ,12);
+}
+// @include mobile {  
+//     html{
+//         font-size: 10px;
+//     }
+// }
 body {
 	background-color: var(--color-page-bg);
 	color: var(--color-main);
@@ -70,6 +77,19 @@ pre.code {
 	margin-inline: auto;
 	max-inline-size: rem($max-width-container);
 	padding-inline: rem($main-offset);
+}
+[class*="__grid"] {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	height: 100%;
+	margin-left: rem(- $main-offset);
+	margin-right: rem(- $main-offset);
+}
+
+[class*="--grid"] {
+	display: grid;
+	gap: 0 rem(30);
 }
 
 // ====================================== Стили отзывчивых картинок (IBG) ===========================================================

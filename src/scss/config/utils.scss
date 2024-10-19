@@ -131,77 +131,77 @@
 
 .ingrid-1 {
 	width: 100%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-2 {
 	width: 50%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-3 {
 	width: 33.333%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-4 {
 	width: 25%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-5 {
 	width: 20%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-6 {
 	width: 16.666%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-7 {
 	width: 14.285%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-8 {
 	width: 12.5%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-9 {
 	width: 11.111%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-11 {
 	width: 9.090%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-12 {
 	width: 8.333%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
@@ -209,81 +209,136 @@
 //---------------
 .ingrid-10 {
 	width: 10%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-20 {
 	width: 20%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-30 {
 	width: 30%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-40 {
 	width: 40%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-50 {
 	width: 50%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-60 {
 	width: 60%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-70 {
 	width: 70%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-80 {
 	width: 80%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-80 {
 	width: 80%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-90 {
 	width: 90%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
 .ingrid-100 {
 	width: 100%;
-	height: 100%;
+	height: inherit;
 	padding-left: rem($main-offset);
 	padding-right: rem($main-offset);
 }
 
+.line-start {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 0 rem(12);
+}
+
+.line-center {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.line-beetwen {
+	display: flex;
+	flex-direction: row;
+	align-items: center;	
+	justify-content: space-between;
+}
+
+.column-beetwen {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+//-------------------------------- Полоса влево за пределы контейнера в бесконечность ------------------------------------------
+
+.left-infinity {
+	--paddingTop: 1.25rem;
+	--paddingRight: 4rem;
+	--paddingBottom: 1.25rem;
+	--backgroundColor: var(--color-main);
+
+	display: inline-block;
+	position: relative;
+	padding-top: var(--paddingTop);
+	padding-right: var(--paddingRight);
+	padding-bottom: var(--paddingBottom);
+	background-color: var(--backgroundColor);
+
+	&::before {
+		position: absolute;
+		content: "X";
+		left: -5000px;
+		width: 5000px;
+		top: 0;
+		padding-top: var(--paddingTop);
+		padding-right: var(--paddingRight);
+		padding-bottom: var(--paddingBottom);
+		background-color: var(--backgroundColor);		
+		color: var(--color-main);		
+	}
+}
 //----------------------------------------------------------Paddings and bred ----------------------------------------------------
 .pd5 {
 	padding: rem(15);
@@ -312,13 +367,16 @@
 .bred {
 	border: 1px solid red;
 }
+.gred{
+	border: 1px solid green;
+}
 
 //--------------------------------------------------------- Buttons ---------------------------------------------------------------
 .btn {
-	display: block;
+	display: inline-block;
 	width: 100%;
 	padding: 1rem;
-	background-color: rgb(234, 234, 234);
-	color: black;
-	border: 1px solid #000;
+	background-color: var(--color-main);
+	color: var(--color-black);
+	border: 1px solid var(--color-black);
 }

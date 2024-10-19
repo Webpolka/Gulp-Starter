@@ -1,0 +1,66 @@
+// ---------------------------------------------------JS --------------------------------------------------------------------------
+//
+// function ratingInput(){
+//     const stars = document.querySelectorAll('.star-input');
+//        const ratingContainer = document.querySelector('.rating-input');
+
+//        stars.forEach((star) => {
+//          star.addEventListener('click', setRating);
+//        });
+
+//        function setRating(event) {
+//          const selectedStar = event.currentTarget;
+//          const rating = selectedStar.getAttribute('data-rating');
+//             // Установите выбранный рейтинг (например, отправьте на сервер или обновите локальное состояние)
+//          // Здесь вы можете добавить код для отправки рейтинга на сервер или сохранения его локально.
+
+//          // Отобразите выбранный рейтинг
+//          stars.forEach((star) => {
+//             if (star.getAttribute('data-rating') <= rating) {
+//               star.classList.add('selected');
+//             } else {
+//               star.classList.remove('selected');
+//             }
+//           });
+//         //   console.log(rating);
+//         $("#ratingInput").val(rating);
+//         }
+
+//     }
+//     export default ratingInput;
+//
+// -------------------------------------------------- HTML ------------------------------------------------------------------------
+//
+// <label for="rating"><b>Ваша оценка</b></label>
+// <div class="rating-input">
+//     <div class="star-input" data-rating="1"></div>
+//     <div class="star-input" data-rating="2"></div>
+//     <div class="star-input" data-rating="3"></div>
+//     <div class="star-input" data-rating="4"></div>
+//     <div class="star-input" data-rating="5"></div>
+// </div>
+// <input id="ratingInput" type="number" name="rating">
+//
+//---------------------------------------------------- SCSS ------------------------------------------------------------------------
+#ratingInput {
+    //--скрытый input
+    display: none;
+}
+
+.rating-input {
+    display: inline-block;
+
+    .star-input {
+        display: inline-block;
+        width: rem(17);
+        height: rem(17);
+        background-color: transparent;
+        background-image: url('../../icons/star-empty.svg'); //--пасивная звезда
+        background-size: cover;
+        cursor: pointer;
+    }
+
+    .star-input.selected {
+        background-image: url('../../icons/star-pull.svg'); //---активная звезда
+    }
+}
