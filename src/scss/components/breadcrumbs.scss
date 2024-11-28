@@ -1,38 +1,43 @@
 // ---------------------------------------------------- HTML ---------------------------------------------------------------- 
 //
-// <section class="section-breadcrumbs">
-//     <div class="container">
-//         <div class="breadcrumbs">
-//             <a href="#">Главная</a><span> / </span>
-//             <a href="#" class="active"> Каталог</a>
-//         </div>
-//     </div>
-// </section>
+// <ul class="breadcrumb">
+//   <li><a href="#">Главная</a></li>
+//   <li><a href="#">Картины</a></li>
+//   <li><a href="#">Лето 1987</a></li>
+//   <li>Италия</li>
+// </ul>
 //
 // ---------------------------------------------------- SCSS ---------------------------------------------------------------
 
-.section-breadcrumbs {
-    background-color: var(--color-white);
-
-    .breadcrumbs {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        span{
-            color: var(--color-black);  
-        }
+/* Стиль списка */
+ul.breadcrumb {
+    padding: 1rem 0;
+    list-style: none;
+    background-color: var(--color-post-bg);
+    /* Отображение элементов списка бок о бок */
+    li {
+        display: inline;
+        font-size: 1rem;
+        /* Добавить символ косой черты (/) перед/за каждым элементом списка */
+        &:not(:first-child)::before {
+            padding: 0.5rem;
+            color: var(--color-main);
+            content: "/\00a0";
+          }
+           &.hovered {
+             background-color: red;
+              }
+        /* Добавить цвет для всех ссылок внутри списка */
         a {
-            font-size: rem(16);
-            line-height: rem(26);
-            font-weight: 400;
-            color: var(--color-black);
-
-            &.active {
-                color: var(--color-main);
-            }
-            &:hover{
-                color: var(--color-main-hover);
-            }
-        }
-    }
-}
-
+            color: var(--color-link);
+            text-decoration: none;
+            /* Добавить цвет на наведении курсора мыши */
+            // &:hover {
+            //     color: var(--color-link-hover);
+            //     // text-decoration: underline;
+            //   }
+          }
+      }      
+     
+  }
+  

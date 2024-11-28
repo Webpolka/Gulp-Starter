@@ -5,7 +5,7 @@
 @import "keyframes";
 
 html {
-	scroll-behavior: smooth;
+	scroll-behavior: smooth;	
 }
 html{
 	@include adaptive-clamp(font-size, 16 ,12);

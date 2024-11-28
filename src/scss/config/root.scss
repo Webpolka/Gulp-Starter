@@ -24,28 +24,39 @@ $max-width-container: $container-width + ($main-offset * 2);
 	--font-titles: var(--font-accent);
 
 	// ------------ Colors Vars -------------
-	--color-main: #000;
-	--color-main-hover: #2d2d2d;	
-	--color-main-btn: violet;
-	--color-main-btn-hover: rgb(197, 46, 197);
-	--color-accent: #ac182c;
-	--color-accent-hover:#be5b5b;
-	--color-link: #2578c8;
 	--color-white: #fff;
-	--color-black: #131313;
-	--color-box:rgb(220, 215, 215);
-	--color-page-bg: #fff;
-	
-	
+	--color-black: #131313;	
+	--color-link: #114f89;
+	--color-link-hover: rgb(112, 72, 206);
+	--color-btn:  #893d11;
+	--color-btn-hover:  #aa6a48;
+
+	// ----------------- Header and footer -----------
+	--color-bg-header: rgb(221, 187, 215);
+	--color-bg-footer: rgb(165, 51, 138) ;
+
 	--transition: 0.3s ease-in-out;
-	--radius: rem(4);	
-	
+	--radius: rem(4);
+
 	--shadow: 0 0 0 2px #00f;
-	--shadow-hover: 0 0 5px 0 #{rgba(#000, 10%)}, 0 0 10px 0 #{rgba(#000, 10%)}, 0 0 15px 0 #{rgba(#000, 10%)};
-	
+	--shadow-hover: 0 0 5px 0 #{rgba(#000, 10%)},
+	0 0 10px 0 #{rgba(#000, 10%)},
+	0 0 15px 0 #{rgba(#000, 10%)};
+
 }
 
-.dark {
-    --color-page-bg: #252526;
-    --color-main: #fff;
+
+// ----------- Mode Switcher -------------
+.light-mode {
+	--color-title: rgba(0, 0, 0, .9);
+	--color-main: #242323;	
+	--color-page-bg: rgb(255, 255, 255);
+	--color-post-bg: rgb(251, 249, 249);
+}
+
+.dark-mode {
+	--color-title: rgba(255, 255, 255);
+	--color-main: #b4a9a9;	
+	--color-page-bg: rgb(0, 0, 0, 0.9);
+	--color-post-bg: rgb(52, 51, 51);
 }

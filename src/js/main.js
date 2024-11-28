@@ -10,29 +10,144 @@
 // import AOS from 'aos'
 // import Swiper, { Navigation, Pagination } from 'swiper';
 
-import { BaseHelpers } from './helpers/base-helpers';
+
 // import { PopupManager } from './modules/popup-manager';
 // import { Tabs } from './modules/tabs';
-// import { Accordion } from './modules/accordion';
-// import mobileNav from './modules/mobile-nav.js';
+
+
 // import rangeSlider from './modules/range-slider.js';
-import owlCarousel from './modules/owl-carousel.js';
-import ratingInput from './modules/rating.js';
 
-
-
-// import { productTabs } from './modules/product-gallery.js';
-// import productGallery from './modules/product-gallery.js';
-
-BaseHelpers.checkWebpSupport();
-
-BaseHelpers.calcScrollbarWidth();
-
-BaseHelpers.addTouchClass();
-
+// ----------------------------------------------------- Базовые скрипты --------------------------------------------------------
+import { BaseHelpers } from './helpers/base-helpers';
 BaseHelpers.addLoadedClass();
 
+BaseHelpers.checkWebpSupport();
+BaseHelpers.calcScrollbarWidth();
+BaseHelpers.addTouchClass();
 BaseHelpers.headerFixed();
+
+// ----------------------------------------------------- Ленивая загрузка --------------------------------------------------------
+import loadingPage from './modules/loading-page.js';
+loadingPage()
+
+// ----------------------------------------------------- Рейтинг звезды  ---------------------------------------------------------
+import ratingStars from './modules/rating-stars.js'
+ratingStars(1, 'Ваша оценка', '<i class="fa-solid fa-star"></i>')
+
+// ----------------------------------------------------- Слайдер -----------------------------------------------------------------
+import carouselSplideInit from './modules/carousel-splide.js';
+carouselSplideInit()
+
+let slider = '.splide'
+let splideIs = document.querySelector(slider)
+if (splideIs) {
+  new Splide(slider, {
+    type: 'loop',       // (slide, loop, fade) - соответственно (незацикленное, зацикленное, замена путем fade эффекта)
+    direction: 'ltr',   // направление карусели (ltr, rtl, ttb) соответсвенно (слева на право, справа на лево, сверху вниз)
+    drag: true,          // разрешать перетаскивать слайдер
+    autoplay: true,      // включить авто перелистывание
+    interval: 2000,      // интервал автоматического перелистывания слайдов в м\сек
+    pauseOnHover: true,  // остановить автоматическое перелистывание при наведении курсора мыши
+
+    perMove: 1,          // количество перемещаемых слайдов за раз
+    perPage: 1,          // Количество слайдов 
+    gap: '1rem', // зазор между слайдами
+
+    height: '100%',     // высота карусели
+    padding: {           // (left, right) - для горизонтальной карусели (top, bottom - для вертикальной карусели)
+      left: 0,
+      right: 0
+    },
+
+    arrows: true,        // отображать стрелки
+    heightRatio: 0.2,   // кэф высоты стрелок
+
+    pagination: true,   // отображать пагинацию
+
+    speed: 5000,         // скорость перелистывания в м\сек
+    rewindSpeed: 5000,   // скорость перемотки слайдов
+
+    rewind: true,   // позволяет вообще перемотку слайдов
+    rewindByDrag: true,  // позволяет делать перемотку слайдов перетаскиванием мыши
+  }).mount();
+}
+
+// ----------------------------------------------------- Аккордион -----------------------------------------------------------------
+import { Accordion } from './modules/accordion.js';
+new Accordion('.accordion', {
+  shouldOpenAll: false, // true
+  defaultOpen: [], // [0,1]
+  collapsedClass: 'open',
+});
+
+// ---------------------------------------- Переключатель темы СВЕТ.\ТЕМН. ---------------------------------------------------------
+import modeSwitcher from './modules/mode-switcher.js';
+const modeOptions = {
+  btnClass: 'inline',
+  lightClass: 'light-mode',
+  lightTextClass: 'light-color--text',
+  darkClass: 'dark-mode',
+  darkTextClass: 'dark-color--text',
+  darkIcon: '<i class="fa-regular fa-moon"></i>',
+  darkText: '<span>Тёмная</span>',
+  lightIcon: '<i class="fa-regular fa-sun"></i>',
+  lightText: '<span>Светлая</span>',
+}
+modeSwitcher(modeOptions);
+
+
+// import { HoverIntentAddClass } from './myJsClasses/hover-intent-class.js'
+// let newHover = new HoverIntentAddClass(
+//   '#breadcrumb',           //  родительский контейнер
+//   'li',                    //  отслеживаемые елементы в родительском контейнере
+//   100,                     //  интервал - задержка при наведении курсора
+//   500,                     //  тайм-аут это задержка при покинутом елементе
+//   doOver,                  //  callBack функция при наведении
+//   {age:30, bool:true, name:'kuzya'},     //  аргумент к функции при наведении
+//   doLeave,                 //  callBack функция при выходе
+//   '2'                      //  аргумент к функции при выходе
+// )
+// newHover.init()
+
+// // если нужно передать несколько аргументов к функции, передаем объектом или массивом
+// function doOver(arg) {
+//   console.log('Over 1 -', arg.age);
+//   console.log('Over 2 -', arg.bool);
+//   console.log('Over 3 -', arg.name);
+// }
+// function doLeave(arg) {
+//   console.log('Leave -', arg);
+// }
+
+
+
+// --------------- Меню Верхнего колинтула сайта и мобильное меню ------------------
+
+import headerMenu from './modules/header-menu.js';
+const optionsMenu = {
+  burgerPosition: 'right',           // кнопка бургер справа
+  direction: 'horizontal',           // напрвление меню
+  method: 'opacity',                 // opacity, display
+  methodHeaderSpeed: 300,            // скорость метода для главного меню
+  methodMobileSpeed: 800,            // скорость метода для мобильного меню
+  slideFunction: 'linear',           // функция метода для slidedown
+  addButtonOpenAll: true,            // добавить кнопку открыть все class = 'mobileAllBtn'
+  addButtonOpenHtml: '<i class="fa-solid fa-chevron-down"></i> Открыть все !',       // html для вставки в кнопку Открыть
+  addButtonCloseHtml: '<i class="fa-solid fa-chevron-up"></i> Закрыть все !',   // html для вставки в кнопку Закрыть
+  mobileAllOpened: false,            // сразу открытые все пункты мобильного меню и реагируют только родительские
+  openHoverChildren: true,          // открывать ли потомков при ховере или нет
+  closeChildren: true,               // закрывать всех потомков ниже или нет
+  closeRootMobile: true,             // закрывать за собой дочерние пункты меню или нет
+  closeHoverChildren: true,          // закрывать дочерние главного меню после ховера или нет
+  openHoverDelay: 100,               // задержка до появления пункта меню при ховере
+  closeHoverRootDelay: 500,          // основная задержка для главного меню
+  closeHoverChildrenDelay: 1000,      // задержка после ховера только дочерних пунктов
+  addHeaderArrows: true,             // добавлять ли стрелочки или нет для главного меню
+  addMobileArrows: true,             // добавлять ли стрелочки или нет для мобильного меню
+  mobileArrowIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>',
+  headerArrowIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>',
+}
+headerMenu(optionsMenu);
 
 /**
  * Открытие/закрытие модальных окон
@@ -62,70 +177,22 @@ BaseHelpers.headerFixed();
 // 	},
 // });
 
-// new Accordion('.accordion', {
-// 	shouldOpenAll: false, // true
-// 	defaultOpen: [], // [0,1]
-// 	collapsedClass: 'open',
-// });
-
-// Мобильная навигация
-//---------------Навигация и работа  под меню в мобильном меню ------------------
-
-// mobileNav();	
-
-// function mobileSubNav() {	
-    		
-//     $('ul.mobile-nav__list>li').click(function () {
-//         var _thisis = $(this);	
-//         if (_thisis.hasClass('opened')) {
-//             $('.mobile-nav ul.nav__sublist').slideUp();
-//             _thisis.children('ul').slideUp();
-//             _thisis.removeClass('opened');
-
-//         } else {
-//             $('.mobile-nav ul.nav__sublist').slideUp();
-//             $('ul.mobile-nav__list>li').removeClass('opened')
-//             _thisis.children('ul').slideDown();
-//             _thisis.addClass('opened');
-//         }
-//     })
-// }
-// mobileSubNav();
-
-
-// ----------------------------Header Menu Hover intent------------------------
-// var timer;
-// var delay = 1000;
-
-// function hoverIntent() {   
-//     $('ul.header-nav__list>li').hover(function () {
-//         var _this = $(this);
-//         $('ul.header-nav__list>li').removeClass('hover');			
-//         _this.addClass('hover');
-//         clearTimeout(timer);
-//     }, function () {
-//         var _this = $(this);
-//         timer = setTimeout(function () {
-//             _this.removeClass('hover');
-//         }, delay);
-//     });
-// }
-// hoverIntent();
-
 //-------------------------------Range slider------------------------------------
-
 // rangeSlider();
 
 //--------------------------инициализация ProductGallery ------------------------
+import { productTabs } from './modules/product-gallery.js';
+import productGallery from './modules/product-gallery.js';
 // ---- здесь в связке работает Owl-carousel 2, magnific-popup и табы ! ---------
-// productGallery();
-// new productTabs('product-tabs', {
-// 	onChange: (data) => {
-// 		console.log(data);
-// 	},
-// });
+
+productGallery();
+new productTabs('product-tabs', {
+	onChange: (data) => {
+		console.log(data);
+	},
+});
 //-------------------------------------------------------------------------------
 
-owlCarousel();
 
-ratingInput();
+
+
