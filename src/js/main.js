@@ -35,42 +35,42 @@ import ratingStars from './modules/rating-stars.js'
 ratingStars(1, 'Ваша оценка', '<i class="fa-solid fa-star"></i>')
 
 // ----------------------------------------------------- Слайдер -----------------------------------------------------------------
-import carouselSplideInit from './modules/carousel-splide.js';
-carouselSplideInit()
+// import carouselSplideInit from './modules/carousel-splide.js';
+// carouselSplideInit()
 
-let slider = '.splide'
-let splideIs = document.querySelector(slider)
-if (splideIs) {
-  new Splide(slider, {
-    type: 'loop',       // (slide, loop, fade) - соответственно (незацикленное, зацикленное, замена путем fade эффекта)
-    direction: 'ltr',   // направление карусели (ltr, rtl, ttb) соответсвенно (слева на право, справа на лево, сверху вниз)
-    drag: true,          // разрешать перетаскивать слайдер
-    autoplay: true,      // включить авто перелистывание
-    interval: 2000,      // интервал автоматического перелистывания слайдов в м\сек
-    pauseOnHover: true,  // остановить автоматическое перелистывание при наведении курсора мыши
+// let slider = '.splide'
+// let splideIs = document.querySelector(slider)
+// if (splideIs) {
+//   new Splide(slider, {
+//     type: 'loop',       // (slide, loop, fade) - соответственно (незацикленное, зацикленное, замена путем fade эффекта)
+//     direction: 'ltr',   // направление карусели (ltr, rtl, ttb) соответсвенно (слева на право, справа на лево, сверху вниз)
+//     drag: true,          // разрешать перетаскивать слайдер
+//     autoplay: true,      // включить авто перелистывание
+//     interval: 2000,      // интервал автоматического перелистывания слайдов в м\сек
+//     pauseOnHover: true,  // остановить автоматическое перелистывание при наведении курсора мыши
 
-    perMove: 1,          // количество перемещаемых слайдов за раз
-    perPage: 1,          // Количество слайдов 
-    gap: '1rem', // зазор между слайдами
+//     perMove: 1,          // количество перемещаемых слайдов за раз
+//     perPage: 1,          // Количество слайдов 
+//     gap: '1rem', // зазор между слайдами
 
-    height: '100%',     // высота карусели
-    padding: {           // (left, right) - для горизонтальной карусели (top, bottom - для вертикальной карусели)
-      left: 0,
-      right: 0
-    },
+//     height: '100%',     // высота карусели
+//     padding: {           // (left, right) - для горизонтальной карусели (top, bottom - для вертикальной карусели)
+//       left: 0,
+//       right: 0
+//     },
 
-    arrows: true,        // отображать стрелки
-    heightRatio: 0.2,   // кэф высоты стрелок
+//     arrows: true,        // отображать стрелки
+//     heightRatio: 0.2,   // кэф высоты стрелок
 
-    pagination: true,   // отображать пагинацию
+//     pagination: true,   // отображать пагинацию
 
-    speed: 5000,         // скорость перелистывания в м\сек
-    rewindSpeed: 5000,   // скорость перемотки слайдов
+//     speed: 5000,         // скорость перелистывания в м\сек
+//     rewindSpeed: 5000,   // скорость перемотки слайдов
 
-    rewind: true,   // позволяет вообще перемотку слайдов
-    rewindByDrag: true,  // позволяет делать перемотку слайдов перетаскиванием мыши
-  }).mount();
-}
+//     rewind: true,   // позволяет вообще перемотку слайдов
+//     rewindByDrag: true,  // позволяет делать перемотку слайдов перетаскиванием мыши
+//   }).mount();
+// }
 
 // ----------------------------------------------------- Аккордион -----------------------------------------------------------------
 import { Accordion } from './modules/accordion.js';
@@ -94,6 +94,53 @@ const modeOptions = {
   lightText: '<span>Светлая</span>',
 }
 modeSwitcher(modeOptions);
+
+// ---------------------------------------- Подключаем MULTI SELECT -----------------------------------------
+import { MultiSelect } from './modules/multi-select.js'
+
+// --- Подключаем все имеющиеся на странице множественные селекты с аттрибутом [data-multi-select] -----------
+// document.querySelectorAll('[data-multi-select]').forEach(select => new MultiSelect(select));
+
+
+
+let multiSelect = document.querySelector('[data-multi-select]')
+new MultiSelect(multiSelect, {
+  placeholder: 'Выбирайте что нибудь',         // плейсхолдер селекта
+  selectAllText: 'Выбрать все !',              // текст для пункта ВЫБРАТЬ ВСЕ
+  howMuchText: "выбрано !",                    // текст для варианта listAll = false показ количества выбранных елементов числом
+  searchText: 'Поиск...',                      // плейсхолдер формы ПОИСКА
+  showCounter: true,                           // показывать ли счетчик выбранных пунктов 
+  max: 3,                                      // количество выбираемых пунктов
+  search: true,                                // показывать форму ПОИСКА
+  selectAll: true,                             // показывать пункт ВЫБРАТЬ ВСЕ   
+  listAll: true,                               // true - перечислять все элементы, false - количество числом
+  closeListOnItemSelect: true,                 // закрывать ли после выбора
+  edge: 1,                                     // сдвиг для стрелочек вверх вних
+  name: '',                                    // добавить атрибут 
+  width: '',                                   // онлайн стили ширина
+  height: '',                                  // онлайн стили высота родителя
+  dropdownWidth: '',                           // онлайн стили ширина выпадающего списка
+  dropdownHeight: '',                          // высота выпадающего выставляеться в файле стилей, здесь не работает
+})
+
+
+// ---------------------------------------- Подключаем ONCE SELECT -----------------------------------------
+
+import { OneSelect } from './modules/one-select.js'
+
+let oneSelect = document.querySelector('[data-one-select]')
+new OneSelect(oneSelect, {
+  placeholder: 'Выбирайте один любой фрукт !',    // плейсхолдер селекта
+  searchText: 'Поиск...',                         // плейсхолдер формы ПОИСКА
+  search: true,                                   // показывать форму ПОИСКА
+  closeListOnItemSelect: false,                   // закрывать ли после выбора
+  edge: 0,                                        // сдвиг для стрелок вверх вниз
+  name: '',                                       // добавить атрибут 
+  width: '',                                      // онлайн стили ширина
+  height: '',                                     // онлайн стили высота родителя
+  dropdownWidth: '',                              // онлайн стили ширина выпадающего списка                                                 
+})
+
 
 
 // import { HoverIntentAddClass } from './myJsClasses/hover-intent-class.js'
@@ -126,7 +173,7 @@ modeSwitcher(modeOptions);
 import headerMenu from './modules/header-menu.js';
 const optionsMenu = {
   burgerPosition: 'right',           // кнопка бургер справа
-  direction: 'horizontal',           // напрвление меню
+  direction: 'vertical',           // напрвление меню
   method: 'opacity',                 // opacity, display
   methodHeaderSpeed: 300,            // скорость метода для главного меню
   methodMobileSpeed: 800,            // скорость метода для мобильного меню
@@ -181,17 +228,19 @@ headerMenu(optionsMenu);
 // rangeSlider();
 
 //--------------------------инициализация ProductGallery ------------------------
-import { productTabs } from './modules/product-gallery.js';
-import productGallery from './modules/product-gallery.js';
-// ---- здесь в связке работает Owl-carousel 2, magnific-popup и табы ! ---------
+// import { productTabs } from './modules/product-gallery.js';
+// import productGallery from './modules/product-gallery.js';
+// // ---- здесь в связке работает Owl-carousel 2, magnific-popup и табы ! ---------
 
-productGallery();
-new productTabs('product-tabs', {
-	onChange: (data) => {
-		console.log(data);
-	},
-});
+// productGallery();
+// new productTabs('product-tabs', {
+// 	onChange: (data) => {
+// 		console.log(data);
+// 	},
+// });
 //-------------------------------------------------------------------------------
+
+
 
 
 

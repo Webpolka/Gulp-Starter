@@ -45,6 +45,7 @@
 		"gh-pages": "^4.0.0",
 		"gulp": "^4.0.2",
 		"gulp-clean-css": "^4.3.0",
+		"gulp-css-scss": "^0.1.0",
 		"gulp-esbuild": "^0.11.2",
 		"gulp-file-include": "^2.3.0",
 		"gulp-fonter-fix": "^0.0.1",

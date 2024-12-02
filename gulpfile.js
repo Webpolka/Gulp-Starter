@@ -19,6 +19,7 @@ import { createSvgSprite } from './gulp/tasks/create-svg-sprite.js';
 import { zip } from './gulp/tasks/zip.js';
 import { ftpDeploy } from './gulp/tasks/ftp-deploy.js';
 
+
 const isBuild = process.argv.includes('--build');
 const browserSyncInstance = browserSync.create();
 
@@ -68,6 +69,7 @@ const deployFTP = gulp.series(reset, mainTasks, ftpDeploy);
  * Выполнение сценария по умолчанию
  * */
 gulp.task('default', dev);
+
 
 /**
  * Экспорт сценариев
