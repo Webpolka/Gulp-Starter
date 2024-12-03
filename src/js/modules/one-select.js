@@ -7,16 +7,17 @@ export class OneSelect {
             search: true,
             closeListOnItemSelect: false,
             edge: 0,
+            numberCells: 7,                                 // количество выпадающих пунктов
             name: '',
             width: '',
             height: '',
-            dropdownWidth: '', // работает только ширина, по высоте не работает из за слайдера, поэтому убрано !
+            dropdownWidth: '',
             data: [],
             onChange: function () { },
             onSelect: function () { },
             onUnselect: function () { }
         };
-    
+
         this.wl_searchPlaceholder = options.searchText
 
         this.options = Object.assign(defaults, options);
@@ -44,47 +45,49 @@ export class OneSelect {
         this.element = this._template();
         this.selectElement.replaceWith(this.element);
         this._updateSelected();
-        this._eventHandlers();     
-        this.current       
+        this._eventHandlers();
+        this.current
+        this.visibleOptions
     }
 
-    _scrollDown(optionItem, counter, optionAmount) {      
-            let scrollWindow = document.querySelector('.one-select-options-only')
-            let scrollWindowHeight = scrollWindow.scrollHeight
-            let clientWindowHeight = scrollWindow.clientHeight
-            let elementHeight = optionItem.offsetHeight     
-            let numberVisibleItems = parseInt(clientWindowHeight / elementHeight) + 1
+    _scrollDown(optionItem, counter, optionAmount) {
+        let scrollWindow = document.querySelector('.one-select-options-only')
+        let scrollWindowHeight = scrollWindow.scrollHeight
+        let clientWindowHeight = scrollWindow.clientHeight
+        let elementHeight = optionItem.offsetHeight
+        let numberVisibleItems = parseInt(clientWindowHeight / elementHeight)
 
-            this.current++
-            if (this.current >= numberVisibleItems - this.options.edge) { this.current = numberVisibleItems - this.options.edge}
-            if (counter >= optionAmount) { this.current = 0}              
-            
-            if (counter === 0) {
-                scrollWindow.scrollTo(0,  - scrollWindowHeight);
-                this.current = 0
-            }
-            if (this.current === numberVisibleItems - this.options.edge) {
-                scrollWindow.scrollBy(0, elementHeight );
-            }         
+        this.current++
+        if (this.current >= numberVisibleItems - this.options.edge) { this.current = numberVisibleItems - this.options.edge }
+        if (counter >= optionAmount) { this.current = 0 }
+
+        if (counter === 0) {
+            scrollWindow.scrollTo(0, - scrollWindowHeight);
+            this.current = 0
+        }
+
+        if (this.current === numberVisibleItems - this.options.edge) {
+            scrollWindow.scrollBy(0, elementHeight + 0.5);
+        }
     }
 
-    _scrollUp(optionItem, counter, optionAmount) {       
-            let scrollWindow = document.querySelector('.one-select-options-only')
-            let scrollWindowHeight = scrollWindow.scrollHeight
-            let clientWindowHeight = scrollWindow.clientHeight
-            let elementHeight = optionItem.offsetHeight
-            let numberVisibleItems = parseInt(clientWindowHeight / elementHeight) + 1          
-            
-            this.current--                
-    
-            if (counter === optionAmount - 1) {
-                scrollWindow.scrollTo(0, scrollWindowHeight);
-                this.current = numberVisibleItems - this.options.edge
-            }
-            if (this.current <= 0 ) {
-                scrollWindow.scrollBy(0, - elementHeight);
-                this.current = 0
-            }          
+    _scrollUp(optionItem, counter, optionAmount) {
+        let scrollWindow = document.querySelector('.one-select-options-only')
+        let scrollWindowHeight = scrollWindow.scrollHeight
+        let clientWindowHeight = scrollWindow.clientHeight
+        let elementHeight = optionItem.offsetHeight
+        let numberVisibleItems = parseInt(clientWindowHeight / elementHeight)
+
+        this.current--
+
+        if (counter === optionAmount - 1) {
+            scrollWindow.scrollTo(0, scrollWindowHeight);
+            this.current = numberVisibleItems - this.options.edge
+        }
+        if (this.current <= 0) {
+            scrollWindow.scrollBy(0, - elementHeight);
+            this.current = 0
+        }
     }
     _template() {
         let optionsHTML = '';
@@ -99,13 +102,13 @@ export class OneSelect {
         }
         let template = `
             <div class="one-select ${this.name}"${this.selectElement.id ? ' id="' + this.selectElement.id + '"' : ''} style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}">
-                ${this.selectedValues.map(value => `<input type="hidden" name="${this.name}[]" value="${value}">`).join('')}
+                ${this.selectedValues.map(value => `<input type="hidden" name="${this.name}" value="${value}">`).join('')}
                 <div class="one-select-header" style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}">
                 <span class="one-select-header-placeholder">${this.placeholder}</span>                
                   
                 </div>
                 <div class="one-select-options" style="${this.options.dropdownWidth ? 'width:' + this.options.dropdownWidth + ';' : ''}">
-                    ${this.options.search === true || this.options.search === 'true' ? `<input type="text" class="one-select-search" placeholder=${this.wl_searchPlaceholder}>` : ''}
+                    ${this.options.search === true || this.options.search === 'true' ? `<div class='one-select-search-wrap'><input type="text" class="one-select-search" autocomplete = "off" placeholder=${this.wl_searchPlaceholder} name='search-${this.name}'></div>` : ''}
                       <div class="one-select-options-only">
                     ${optionsHTML}
                      </div>
@@ -113,48 +116,58 @@ export class OneSelect {
             </div>
         `;
         let element = document.createElement('div');
+        element.setAttribute('name', `${this.name}`)
         element.innerHTML = template;
         return element;
     }
 
     _eventHandlers() {
-         // ---------------------------- КЛАВА ----------------------------------
-         let searchInput = this.element.querySelector('.one-select-search')
-         let searchItems = this.element.querySelectorAll('.key-item')
-         let counter = 15
-         let related
- 
- 
-         searchInput.addEventListener('keydown', (event) => {
-             event.stopPropagation()
-             event.preventDefault()
- 
-             if (event.code === "ArrowUp" || event.code === "ArrowDown") {
-                 event.code === "ArrowUp" ? counter-- : counter++;
- 
+        // ---------------------------- КЛАВА ----------------------------------
+        let searchInput = this.element.querySelector('.one-select-search')
+        let counter = 15
+        let related
+
+        searchInput.addEventListener('keydown', (event) => {
+
+            this.visibleOptions = []
+            this.element.querySelectorAll('.one-select-option').forEach(item => {
+                getComputedStyle(item, null).display == 'flex' ? this.visibleOptions.push(item) : ''
+            })
+            let searchItems = this.visibleOptions
+            event.stopPropagation()
+
+            if (event.code === "ArrowUp" || event.code === "ArrowDown") {
+                event.code === "ArrowUp" ? counter-- : counter++;
+
                 if (counter < 0) counter = searchItems.length - 1
                 if (counter > searchItems.length - 1) counter = 0
- 
-                 // console.log(optionAmount);
-                 if (event.code === "ArrowDown") this._scrollDown(searchItems[counter], counter, searchItems.length);
-                 if (event.code === "ArrowUp") this._scrollUp(searchItems[counter], counter, searchItems.length);
- 
-                 if (related && (counter !== 0 || counter !== searchItems.length)) related.classList.remove("key-item-current")
-                 searchItems[counter].classList.add("key-item-current");
-                 related = searchItems[counter]
-             }
- 
-             if (event.code === "Enter" || event.code === "Space") {
-                 const currentDropdownItem = document.querySelector(
-                     ".key-item-current"
-                 );
-                 currentDropdownItem && currentDropdownItem.click();
-             }
-         })
-         
+
+                if (event.code === "ArrowDown") this._scrollDown(searchItems[counter], counter, searchItems.length);
+                if (event.code === "ArrowUp") this._scrollUp(searchItems[counter], counter, searchItems.length);
+
+                if (related && (counter !== 0 || counter !== searchItems.length)) related.classList.remove("key-item-current")
+                searchItems[counter].classList.add("key-item-current");
+                related = searchItems[counter]
+            }
+
+            if (event.code === "Enter" || event.code === "Space") {
+
+                const currentDropdownItem = document.querySelector(
+                    ".key-item-current"
+                );
+
+                document.querySelectorAll(".key-item-current").forEach(el => {
+                    el.classList.remove('key-item-current')
+                });
+                currentDropdownItem && currentDropdownItem.click();
+                event.preventDefault()
+            }
+        })
+
         // ---------------------------- Мышка ----------------------------------
         let headerElement = this.element.querySelector('.one-select-header');
         this.related = this.element.querySelector('.one-select-options').querySelector('.one-select-selected')
+        var optionsAllElement = this.element.querySelector('div.one-select-options')
         this.element.querySelectorAll('.one-select-option').forEach(option => {
             option.onclick = () => {
                 let selected = true;
@@ -167,7 +180,8 @@ export class OneSelect {
                         selected = false;
                         option.classList.add('one-select-selected');
                         if (this.options.closeListOnItemSelect === true || this.options.closeListOnItemSelect === 'true') {
-                            headerElement.classList.remove('one-select-header-active');
+                            headerElement.classList.remove('one-select-header-active');                          
+                            optionsAllElement.style.height = 0;
                         }
                         this.related = option
                         if (this.element.querySelector('.one-select-header-option')) {
@@ -176,11 +190,11 @@ export class OneSelect {
                         } else {
                             headerElement.insertAdjacentHTML('afterbegin', `<span class="one-select-header-option" data-value="${option.dataset.value}">${option.querySelector('.one-select-option-text').innerHTML}</span>`);
                         }
-                        this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}[]" value="${option.dataset.value}">`);
+                        this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                         this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
                         return;
                     }
-                    option.classList.add('one-select-selected');                   
+                    option.classList.add('one-select-selected');
                     this.related = option
 
                     if (this.element.querySelector('.one-select-header-option')) {
@@ -190,7 +204,7 @@ export class OneSelect {
                         headerElement.insertAdjacentHTML('afterbegin', `<span class="one-select-header-option" data-value="${option.dataset.value}">${option.querySelector('.one-select-option-text').innerHTML}</span>`);
                     }
 
-                    this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}[]" value="${option.dataset.value}">`);
+                    this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                     this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
                 } else {
                     option.classList.remove('one-select-selected');
@@ -209,7 +223,8 @@ export class OneSelect {
                 }
                 this.element.querySelectorAll('.one-select-option').forEach(option => option.style.display = 'flex');
                 if (this.options.closeListOnItemSelect === true || this.options.closeListOnItemSelect === 'true') {
-                    headerElement.classList.remove('one-select-header-active');
+                    headerElement.classList.remove('one-select-header-active');                  
+                    optionsAllElement.style.height = 0;
                 }
                 this.options.onChange(option.dataset.value, option.querySelector('.one-select-option-text').innerHTML, option);
                 if (selected) {
@@ -219,17 +234,47 @@ export class OneSelect {
                 }
             };
         });
-        // -- 
-        headerElement.onclick = () => {            
-            headerElement.classList.toggle('one-select-header-active')           
+
+        // ----------------------------- Клик по каретке ОТКРЫТЬ\ЗАКРЫТЬ Мультиселект --------------------------------------
+        headerElement.onclick = () => {
+            headerElement.classList.toggle('one-select-header-active')
+            if (headerElement.classList.contains('one-select-header-active')) {
+                var searchElement = this.element.querySelector('div.one-select-search-wrap')
+                if (this.visibleOptions) { var cellElement = this.visibleOptions[0] } else {
+                    var cellElement = this.element.querySelector('div.one-select-option')
+                }
+                var optionsAllElement = this.element.querySelector('div.one-select-options')
+                var optionsOnlyElement = this.element.querySelector('div.one-select-options-only')
+                var optionsOnlyHeight = this.options.numberCells * cellElement.scrollHeight
+
+                // console.log('Высота поиска - ', searchElement.scrollHeight,
+                //     ' Высота ячейки -  ', cellElement.scrollHeight,
+                //     ' Высота Оптионс  - ', optionsOnlyHeight);
+
+                let paddingDropdownTop = parseInt(getComputedStyle(optionsAllElement, null).paddingTop)
+                let paddingDropdownBottom = parseInt(getComputedStyle(optionsAllElement, null).paddingBottom)
+                optionsAllElement.style.height = optionsOnlyHeight + searchElement.scrollHeight + paddingDropdownTop + paddingDropdownBottom + 'px';
+                optionsOnlyElement.style.height = optionsOnlyHeight + 'px'
+
+            } else {
+                var optionsAllElement = this.element.querySelector('div.one-select-options')
+                optionsAllElement.style.height = 0;
+
+            }
         }
         if (this.options.search === true || this.options.search === 'true') {
             let search = this.element.querySelector('.one-select-search');
             search.oninput = () => {
+                var filtered = []
                 this.element.querySelectorAll('.one-select-option').forEach(option => {
                     option.style.display = option.querySelector('.one-select-option-text').innerHTML.toLowerCase().indexOf(search.value.toLowerCase()) > -1 ? 'flex' : 'none';
-                });
-            };
+                    option.classList.remove('key-item-current')
+                    if (option.style.display !== 'none') filtered.push(option)
+                })
+
+                counter = 15
+                filtered.length === 1 ? filtered[0].classList.add('key-item-current') : ''
+            }
         }
 
         if (this.selectElement.id && document.querySelector('label[for="' + this.selectElement.id + '"]')) {
@@ -240,6 +285,7 @@ export class OneSelect {
         document.addEventListener('click', event => {
             if (!event.target.closest('.' + this.name) && !event.target.closest('label[for="' + this.selectElement.id + '"]')) {
                 headerElement.classList.remove('one-select-header-active');
+
             }
         });
     }

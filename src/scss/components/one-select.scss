@@ -1,60 +1,59 @@
 .one-select {
-// ----------------------------------------------------- HTML ------------------------------------------------------------------------
-//
-		// <label for="fruits">Fruits</label>
-        // <select id="fruits" name="fruits" data-placeholder="Добавить фруктики..." data-one-select>
-        //   <option value="Apple">Apple</option>
-        //   <option value="Banana" selected>Banana</option>
-        //   <option value="Blackberry">Blackberry</option>
-        //   <option value="Blueberry">Blueberry</option>
-        //   <option value="Cherry">Cherry</option>
-        //   <option value="Cranberry">Cranberry</option>
-        //   <option value="Grapes">Grapes</option>
-        //   <option value="Kiwi">Kiwi</option>
-        //   <option value="Mango">Mango</option>
-        //   <option value="Orange">Orange</option>
-        //   <option value="Peach">Peach</option>
-        //   <option value="Pear">Pear</option>
-        //   <option value="Pineapple">Pineapple</option>
-        //   <option value="Raspberry">Raspberry</option>
-        //   <option value="Strawberry">Strawberry</option>
-        //   <option value="Watermelon">Watermelon</option>
-        // </select>
-//
-// ------------------------------------------------------ JS in modules/one-select.js -----------------------------------------------
-// --- Подключаем все имеющиеся на странице множественные селекты с аттрибутом [data-one-select] -----------
-// document.querySelectorAll('[data-one-select]').forEach(select => new OnceSelect(oneSelect));
-//
-// import { OneSelect } from './modules/one-select.js'
+	// ----------------------------------------------------- HTML ------------------------------------------------------------------------
+	//
+	// <label for="fruits">Fruits</label>
+	// <select id="fruits" name="fruits" data-placeholder="Добавить фруктики..." data-one-select>
+	//   <option value="Apple">Apple</option>
+	//   <option value="Banana" selected>Banana</option>
+	//   <option value="Blackberry">Blackberry</option>
+	//   <option value="Blueberry">Blueberry</option>
+	//   <option value="Cherry">Cherry</option>
+	//   <option value="Cranberry">Cranberry</option>
+	//   <option value="Grapes">Grapes</option>
+	//   <option value="Kiwi">Kiwi</option>
+	//   <option value="Mango">Mango</option>
+	//   <option value="Orange">Orange</option>
+	//   <option value="Peach">Peach</option>
+	//   <option value="Pear">Pear</option>
+	//   <option value="Pineapple">Pineapple</option>
+	//   <option value="Raspberry">Raspberry</option>
+	//   <option value="Strawberry">Strawberry</option>
+	//   <option value="Watermelon">Watermelon</option>
+	// </select>
+	//
+	// ------------------------------------------------------ JS in modules/one-select.js -----------------------------------------------
+	// --- Подключаем все имеющиеся на странице множественные селекты с аттрибутом [data-one-select] -----------
+	// document.querySelectorAll('[data-one-select]').forEach(select => new OnceSelect(oneSelect));
+	//
+	// import { OneSelect } from './modules/one-select.js'
 
-// let oneSelect = document.querySelector('[data-one-select]')
-// new OneSelect(oneSelect, {
-//   placeholder: 'Выбирайте один любой фрукт !',    // плейсхолдер селекта
-//   searchText: 'Поиск...',                         // плейсхолдер формы ПОИСКА
-//   search: true,                                   // показывать форму ПОИСКА
-//   closeListOnItemSelect: false,                   // закрывать ли после выбора
-//   edge: 0,                                        // сдвиг для стрелок вверх вниз
-//   name: '',                                       // добавить атрибут 
-//   width: '',                                      // онлайн стили ширина
-//   height: '',                                     // онлайн стили высота родителя
-//   dropdownWidth: '',                              // онлайн стили ширина выпадающего списка                                                 
-// })
-//
-// ------------------------------------------------------- SCSS ----------------------------------------------------------------------
+	// let oneSelect = document.querySelector('[data-one-select]')
+	// new OneSelect(oneSelect, {
+	//   placeholder: 'Выбирайте один любой фрукт !',    // плейсхолдер селекта
+	//   searchText: 'Поиск...',                         // плейсхолдер формы ПОИСКА
+	//   search: true,                                   // показывать форму ПОИСКА
+	//   closeListOnItemSelect: false,                   // закрывать ли после выбора
+	//   edge: 0,                                        // сдвиг для стрелок вверх вниз
+	//   name: '',                                       // добавить атрибут 
+	//   width: '',                                      // онлайн стили ширина
+	//   height: '',                                     // онлайн стили высота родителя
+	//   dropdownWidth: '',                              // онлайн стили ширина выпадающего списка                                                 
+	// })
+	//
+	// ------------------------------------------------------- SCSS ----------------------------------------------------------------------
 
 	--caret-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 	--checkbox-icon: url(../../icons/star-pull.svg);
 	// -----------------------------------------------------  ОБЩИЕ НАСТРОЙКИ МУЛЬТИСЕЛЕКТА ------------------------------------------------------------
-	--font-size: 1.5rem; // общий размер шрифта 
-	--scroll-search-padding: 6.2rem; // ВАЖНО ДЛЯ НОРМАЛЬНОЙ РАБОТЫ СКРОЛА( МЕНЯТЬ ЕСЛИ ИЗМЕНЯЕШЬ ВЫСОТУ ПОИСКА !)
+	--font-size: 2rem; // общий размер шрифта 
 
 	--color-multi-main: #920a65; // цвет основной текста	
 	--color-placeholder: #d61010; // цвет placeholder верхней всегда открытой части мультиселекта
 	--color-option-text: inherit; // цвет неактивного текста нижних выпадающих пунктов 
 	--color-option-text-active: #aec940; // цвет активного текста нижних выпадающих пунктов
 	--color-search-placeholder: #c5400b; // цвет placeholder поля поиска в выпадающем меню  
-	--hover-bg-color: rgb(0,0,0,0.08); // цвет фона пункта при наведении курсора мыши
-	--keydown-bg-color: rgb(0,0,0,0.2); // цвет фона пункта при управлении стрелочками
+	--hover-bg-color: rgb(0, 0, 0, 0.08); // цвет фона пункта при наведении курсора мыши
+	--keydown-bg-color: rgb(0, 0, 0, 0.2); // цвет фона пункта при управлении стрелочками
 
 	--color-scrollbar-track: white;
 	--color-scrollbar-thumb: #40c979;
@@ -83,27 +82,26 @@
 
 	// ---------------------------------------------------- НИЖНЯЯ ВЫПАДАЮЩАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА  ------------------------------------------------------------
 	--bottom-dropdown-bg: #c1c9d0; // фон выпадающего меню
-	--bottom-dropdown-max-height: 50vh; // максимальная высота выпадающего мультиселекта
 	--bottom-dropdown-margin-top: 0rem; // отступ сверху
-	--bottom-dropdown-padding: 0 ; // паддинг всего выпадающего мультиселекта
+	--bottom-dropdown-padding: 0rem; // паддинг всего выпадающего мультиселекта
 	--bottom-dropdown-border-radius: 1rem; // закругление всего
 	--bottom-dropdown-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // затемнение
-	
+
 	// ---------------- ПУНКТ НИЖНЕГО МУЛЬТИСЕЛЕКТА -----------------------
-	--bottom-option-padding-top: 0.3rem; // паддинг сверху
-	--bottom-option-padding-bottom: 0.3rem; // паддинг снизу
+	--bottom-option-padding-top: 1rem; // паддинг сверху
+	--bottom-option-padding-bottom: 1rem; // паддинг снизу
 	--bottom-option-padding-left: 1rem; // паддинг слева
 	--bottom-option-padding-right: 1rem; // паддинг справа
 	--bottom-option-border-radius: 0; // закругление бордера
 	--bottom-option-height: calc(var(--font-size) + var(--bottom-option-padding-top) + var(--bottom-option-padding-bottom + 2px)); // вычисляется автоматически
 
 	// ---------------- ПУНКТ ПОИСК НИЖНЕГО МУЛЬТИСЕЛЕКТА ----------------
-	--bottom-search-color-bg: #d3baba ; // цвет фона формы поиска
+	--bottom-search-color-bg: #d3baba; // цвет фона формы поиска
 	--bottom-search-padding: 1rem; // паддинг общий
 	--bottom-search-border: 1px solid #9e2b05; // бордер
 	--bottom-search-border-radius: 0; // закругление бордера
 	--bottom-search-margin: 1rem; // отспупы общий
-    --bottom-search-boxshadow: 1px -1px 20px 13px rgba(17, 35, 15, 0.22); // боксшадов для формы поиска
+	--bottom-search-boxshadow: 1px -1px 20px 13px rgba(17, 35, 15, 0.22); // боксшадов для формы поиска
 
 	// --------------- ЧЕКБОКС ПУНКТА НИЖНЕГО МУЛЬТИСЕЛЕКТА --------------
 	--bottom-option-radio-margin-right: 1.5rem; // отступ справа от чекбокса
@@ -125,7 +123,7 @@
 			background-color: var(--keydown-bg-color);
 		}
 	}
-	
+
 
 	.one-select-header {
 		border: var(--top-header-border);
@@ -141,7 +139,7 @@
 		box-sizing: border-box;
 		align-items: center;
 		border-radius: var(--top-header-border-radius);
-		cursor: pointer;	
+		cursor: pointer;
 		align-items: center;
 		width: 100%;
 		font-size: var(--font-size);
@@ -166,7 +164,7 @@
 
 		.one-select-header-option {
 			display: inline-flex;
-			align-items: center;		
+			align-items: center;
 			background-color: var(--top-header-option-bg);
 			font-size: var(--font-size);
 			padding-left: var(--top-header-option-padding-left);
@@ -190,45 +188,41 @@
 		}
 
 		+ {
-			.one-select-options {				
-				opacity: 1;					
+			.one-select-options {
+				opacity: 1;
 				width: inherit;
-				height: var(--bottom-dropdown-max-height);
-				margin-top: var(--bottom-dropdown-margin-top);		
-                padding: var(--bottom-dropdown-padding);	
-				overflow: hidden;	
-				
+				margin-top: var(--bottom-dropdown-margin-top);
+				overflow: hidden;
+
 			}
 		}
 	}
 
-	.one-select-options {		
-		display: flex;		
+	.one-select-options {
+		display: flex;
 		align-content: flex-start;
-		opacity: 0.5;		
-		height: 0;		
+		opacity: 1;
+		height: 0;
 		overflow: hidden;
 		width: inherit;
 		transition: all 1s ease-in-out;
+		padding: var(--bottom-dropdown-padding);
 
 		box-sizing: border-box;
 		flex-flow: wrap;
-		
+
 		position: absolute;
 		top: 100%;
 		left: 0;
 		right: 0;
-		z-index: 5;	
+		z-index: 999;
 		background-color: var(--bottom-dropdown-bg);
-		border-radius: var(--bottom-dropdown-border-radius);	
+		border-radius: var(--bottom-dropdown-border-radius);
 		box-shadow: var(--bottom-dropdown-box-shadow);
 		border: none;
-		max-height: var(--bottom-dropdown-max-height);
 
 		.one-select-options-only {
 			width: inherit;
-			max-height: calc(var(--bottom-dropdown-max-height) - var(--scroll-search-padding));
-			
 			overflow-y: auto;
 			overflow-x: hidden;
 
@@ -288,7 +282,7 @@
 			&:active {
 				background-color: var(--hover-bg-color);
 			}
-		}		
+		}
 
 		.one-select-option.one-select-selected {
 			.one-select-option-radio {
@@ -305,27 +299,31 @@
 			}
 		}
 
+		.one-select-search-wrap {
+			width: 100%;
+			padding: var(--bottom-search-margin);
+		}
+
 		.one-select-search {
 			align-self: start;
 			padding: var(--bottom-search-padding);
 			border: var(--bottom-search-border);
 			border-radius: var(--bottom-search-border-radius);
-			margin: var(--bottom-search-margin);
 			width: 100%;
 			outline: none;
 			font-size: var(--font-size);
 			background-color: var(--bottom-search-color-bg);
-           
+
 			&:focus {
 				box-shadow: var(--bottom-search-boxshadow);
 				outline: 1px solid var(--color-multi-main);
 			}
+
 			&::placeholder {
 				color: var(--color-search-placeholder);
 			}
-		}
-	}
-
+		}		  
+	}	
 	.one-select-option {
 		display: flex;
 		align-self: start;
@@ -338,5 +336,5 @@
 		width: 100%;
 		font-size: var(--font-size);
 		color: var(--color-multi-main);
-	}	
+	}
 }

@@ -49,7 +49,6 @@
 	--checkbox-icon: url(../../icons/star-pull.svg);
 	// -----------------------------------------------------  ОБЩИЕ НАСТРОЙКИ МУЛЬТИСЕЛЕКТА ------------------------------------------------------------
 	--font-size: 1rem; // общий размер шрифта 
-	--scroll-search-padding: 8.8rem; // ВАЖНО ДЛЯ НОРМАЛЬНОЙ РАБОТЫ СКРОЛА( МЕНЯТЬ ЕСЛИ ИЗМЕНЯЕШЬ ВЫСОТУ ПОИСКА !)
 
 	--color-multi-main: #920a65; // цвет основной текста	
 	--color-placeholder: #d61010; // цвет placeholder верхней всегда открытой части мультиселекта
@@ -63,7 +62,6 @@
 	--color-scrollbar-thumb: #40c979;
 	--color-scrollbar-thumb-border-radius: 5px;
 	--color-scrollbar-thumb-active: var(--color-multi-main);
-
 
 	// ------------------------------------- ВЕРХНЯЯ ОСНОВНАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА КОТОРАЯ ВСТАВЛЯЕТЬСЯ В ВЕРСТКУ ---------------------------------------------
 	--top-header-padding-top: 1rem; // паддинг сверху верхней видимой части
@@ -85,16 +83,15 @@
 	--top-header-option-border-radius: 0.5rem; // закругление бордера
 
 	// ---------------------------------------------------- НИЖНЯЯ ВЫПАДАЮЩАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА  ------------------------------------------------------------
-	--bottom-dropdown-bg: #c1c9d0; // фон выпадающего меню
-	--bottom-dropdown-max-height: 50vh; // максимальная высота выпадающего мультиселекта
+	--bottom-dropdown-bg: #c1c9d0; // фон выпадающего меню	
 	--bottom-dropdown-margin-top: 0rem; // отступ сверху
-	--bottom-dropdown-padding: 0.3rem; // паддинг всего выпадающего мультиселекта
+	--bottom-dropdown-padding: 0rem; // паддинг всего выпадающего мультиселекта
 	--bottom-dropdown-border-radius: 1rem; // закругление всего
 	--bottom-dropdown-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // затемнение
 
 	// ---------------- ПУНКТ НИЖНЕГО МУЛЬТИСЕЛЕКТА -----------------------
-	--bottom-option-padding-top: 0.3rem; // паддинг сверху
-	--bottom-option-padding-bottom: 0.3rem; // паддинг снизу
+	--bottom-option-padding-top: 0.5rem; // паддинг сверху
+	--bottom-option-padding-bottom: 0.5rem; // паддинг снизу
 	--bottom-option-padding-left: 1rem; // паддинг слева
 	--bottom-option-padding-right: 1rem; // паддинг справа
 	--bottom-option-border-radius: 0; // закругление бордера
@@ -201,9 +198,8 @@
 		+ {
 			.multi-select-options {
 				opacity: 1;
-				width: inherit;
-				height: var(--bottom-dropdown-max-height);
-				margin-top: var(--bottom-dropdown-margin-top);
+				width: inherit;				
+				margin-top: var(--bottom-dropdown-margin-top);				
 
 			}
 		}
@@ -217,25 +213,21 @@
 		overflow: hidden;
 		width: inherit;
 		transition: all 1s ease-in-out;
-
 		box-sizing: border-box;
 		flex-flow: wrap;
 
 		position: absolute;
+		padding: var(--bottom-dropdown-padding);
 		top: 100%;
 		left: 0;
 		right: 0;
 		z-index: 999;
 		background-color: var(--bottom-dropdown-bg);
 		border-radius: var(--bottom-dropdown-border-radius);
-		border: none;
-		max-height: var(--bottom-dropdown-max-height);
-
+		border: none;	
 		// ------------------------------------------------- !!!!!!!!!!! --------------------------------------------------------
 		.multi-select-options-only {
-			width: inherit;
-			max-height: calc(var(--bottom-dropdown-max-height) - var(--scroll-search-padding));
-			padding-bottom: 1rem;
+			width: inherit;					
 			overflow-y: auto;
 			overflow-x: hidden;
 
@@ -361,13 +353,15 @@
 				color: var(--color-option-text-active);
 			}
 		}
-
+		.multi-select-search-wrap{
+			width: 100%;
+			padding: var(--bottom-search-margin);
+		}
 		.multi-select-search {
 			align-self: start;
 			padding: var(--bottom-search-padding);
 			border: var(--bottom-search-border);
 			border-radius: var(--bottom-search-border-radius);
-			margin: var(--bottom-search-margin);
 			width: 100%;
 			outline: none;
 			font-size: var(--font-size);

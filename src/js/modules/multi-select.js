@@ -13,6 +13,7 @@ export class MultiSelect {
             listAll: true,
             closeListOnItemSelect: false,
             edge: 0,
+            numberCells: 5,
             name: '',
             width: '',
             height: '',
@@ -52,8 +53,8 @@ export class MultiSelect {
         this.selectElement.replaceWith(this.element);
         this._updateSelected();
         this._eventHandlers();
-      
-        this.current 
+        this.current
+        this.visibleOptions 
 
     }
     _scrollDown(optionItem, counter, optionAmount) {
@@ -61,20 +62,20 @@ export class MultiSelect {
             let scrollWindow = document.querySelector('.multi-select-options-only')
             let scrollWindowHeight = scrollWindow.scrollHeight
             let clientWindowHeight = scrollWindow.clientHeight
-            let elementHeight = optionItem.offsetHeight     
-            let numberVisibleItems = (parseInt(clientWindowHeight / elementHeight) + 1)
+            let elementHeight = optionItem.offsetHeight
+            let numberVisibleItems = parseInt(clientWindowHeight / elementHeight)
 
             this.current++
-            if (this.current >= numberVisibleItems - this.options.edge) { this.current = numberVisibleItems - this.options.edge}
-            if (counter === 1) { this.current = 1 }
-          
-            if (counter === 1) {
-                scrollWindow.scrollTo(0,  - scrollWindowHeight);
-                this.current = 1
+            if (this.current >= numberVisibleItems - this.options.edge) { this.current = numberVisibleItems - this.options.edge }
+            if (counter === 0) { this.current = 0 }
+
+            if (counter === 0) {
+                scrollWindow.scrollTo(0, - scrollWindowHeight);
+                this.current = 0
             }
             if (this.current === numberVisibleItems - this.options.edge) {
-                scrollWindow.scrollBy(0, elementHeight);
-            }     
+                scrollWindow.scrollBy(0, elementHeight + 0.5);
+            }
         }
     }
 
@@ -84,19 +85,19 @@ export class MultiSelect {
             let scrollWindowHeight = scrollWindow.scrollHeight
             let clientWindowHeight = scrollWindow.clientHeight
             let elementHeight = optionItem.offsetHeight
-            let numberVisibleItems = (parseInt(clientWindowHeight / elementHeight) + 1)           
-            
+            let numberVisibleItems = parseInt(clientWindowHeight / elementHeight)
+
             this.current--
-            if (this.current < 1) { this.current = 1 }
-            if (counter === optionAmount) { this.current = numberVisibleItems - this.options.edge }             
-            
+            if (this.current < 1) { this.current = 0 }
+            if (counter === optionAmount) { this.current = numberVisibleItems - this.options.edge }
+
             if (counter === optionAmount) {
                 scrollWindow.scrollTo(0, scrollWindowHeight);
                 this.current = numberVisibleItems - this.options.edge
             }
-            if (this.current === 1) {
+            if (this.current === 0) {
                 scrollWindow.scrollBy(0, - (elementHeight - 0.5));
-            }     
+            }
         }
     }
 
@@ -120,14 +121,14 @@ export class MultiSelect {
         }
         let template = `
             <div class="multi-select ${this.name}"${this.selectElement.id ? ' id="' + this.selectElement.id + '"' : ''} style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}">
-                ${this.selectedValues.map(value => `<input type="hidden" name="${this.name}[]" value="${value}">`).join('')}
+                ${this.selectedValues.map(value => `<input type="hidden" name="${this.name}" value="${value}">`).join('')}
                 <div class="multi-select-header" style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}">
                 <span class="multi-select-header-placeholder">${this.placeholder}</span> 
                 <span class="multi-select-header-max">${this.options.max && this.wl_counterPlaceHolder ? this.selectedValues.length + '/' + this.options.max : ''}</span>
                   
                 </div>
                 <div class="multi-select-options" style="${this.options.dropdownWidth ? 'width:' + this.options.dropdownWidth + ';' : ''}${this.options.dropdownHeight ? 'height:' + this.options.dropdownHeight + ';' : ''}">
-                    ${this.options.search === true || this.options.search === 'true' ? `<input type="text" class="multi-select-search" placeholder=${this.wl_searchPlaceholder}>` : ''}
+                    ${this.options.search === true || this.options.search === 'true' ? `<div class='multi-select-search-wrap'><input type="text" class="multi-select-search" autocomplete="off" placeholder=${this.wl_searchPlaceholder} name='search-${this.name}'></div>` : ''}
                    ${selectAllHTML}
                    <div class="multi-select-options-only">
                    ${optionsHTML}
@@ -136,29 +137,32 @@ export class MultiSelect {
             </div>
         `;
         let element = document.createElement('div');
+        element.setAttribute('name' , `${this.name}`)
         element.innerHTML = template;
         return element;
     }
 
     _eventHandlers() {
-        // ---------------------------- КЛАВА ----------------------------------
-        let searchInput = this.element.querySelector('.multi-select-search')
-        let searchItems = this.element.querySelectorAll('.key-item')
-        let counter = 0
+        // ---------------------------- КЛАВА ---------------------------------
+        let searchInput = this.element.querySelector('.multi-select-search')    
+        let counter = 15
         let related
-
-
         searchInput.addEventListener('keydown', (event) => {
-            event.stopPropagation()
-            event.preventDefault()
+
+            this.visibleOptions = []
+            this.element.querySelectorAll('.multi-select-option').forEach(item => {          
+                getComputedStyle(item , null).display == 'flex'?this.visibleOptions.push(item):''
+            })               
+            
+            let searchItems = this.visibleOptions
+            event.stopPropagation()          
 
             if (event.code === "ArrowUp" || event.code === "ArrowDown") {
                 event.code === "ArrowUp" ? counter-- : counter++;
 
                 if (counter < 0) counter = searchItems.length - 1
                 if (counter > searchItems.length - 1) counter = 0
-
-                // console.log(optionAmount);
+         
                 if (event.code === "ArrowDown") this._scrollDown(searchItems[counter], counter, searchItems.length - 1);
                 if (event.code === "ArrowUp") this._scrollUp(searchItems[counter], counter, searchItems.length - 1);
 
@@ -171,7 +175,13 @@ export class MultiSelect {
                 const currentDropdownItem = document.querySelector(
                     ".key-item-current"
                 );
+
+                document.querySelectorAll(".key-item-current").forEach(el => {
+                    el.classList.remove('key-item-current')
+                });                
+                
                 currentDropdownItem && currentDropdownItem.click();
+                event.preventDefault()
             }
         })
 
@@ -231,8 +241,11 @@ export class MultiSelect {
                     this.selectedValues.length >= this.options.max) {
                     headerElement.classList.remove('multi-select-header-active');
                     this.element.querySelectorAll('.multi-select-option').forEach(el => {
-                        el.classList.remove("key-current")
+                        el.classList.remove("key-current")                       
+                        var optionsAllElement = this.element.querySelector('div.multi-select-options')
+                        optionsAllElement.style.height = 0 ;    
                     })
+
                 }
                 this.options.onChange(option.dataset.value, option.querySelector('.multi-select-option-text').innerHTML, option);
                 if (selected) {
@@ -242,14 +255,44 @@ export class MultiSelect {
                 }
             };
         });
-        // -- 
-        headerElement.onclick = () => { headerElement.classList.toggle('multi-select-header-active') }
+
+        // ----------------------------- Клик по каретке ОТКРЫТЬ\ЗАКРЫТЬ Мультиселект --------------------------------------
+        headerElement.onclick = () => {
+            headerElement.classList.toggle('multi-select-header-active')
+            if (headerElement.classList.contains('multi-select-header-active')) {
+                var searchElement = this.element.querySelector('div.multi-select-search-wrap')
+                var allElement = this.element.querySelector('div.multi-select-all')
+                var cellElement = this.element.querySelector('div.multi-select-option')
+                var optionsAllElement = this.element.querySelector('div.multi-select-options')
+                var optionsOnlyElement = this.element.querySelector('div.multi-select-options-only')
+                var optionsOnlyHeight = this.options.numberCells * cellElement.scrollHeight
+
+                console.log('Высота поиска - ', searchElement.scrollHeight,
+                    ' Высота выбрать все - ', allElement.scrollHeight,
+                    ' Высота ячейки -  ', cellElement.scrollHeight,
+                    ' Высота Оптионс  - ', optionsOnlyHeight);
+
+                let paddingDropdownTop = parseInt(getComputedStyle(optionsAllElement, null).paddingTop)
+                let paddingDropdownBottom = parseInt(getComputedStyle(optionsAllElement, null).paddingBottom)               
+                optionsAllElement.style.height = optionsOnlyHeight + allElement.scrollHeight + searchElement.scrollHeight  + paddingDropdownTop + paddingDropdownBottom + 'px';               
+                optionsOnlyElement.style.height = optionsOnlyHeight + 'px'              
+            } else {
+                var optionsAllElement = this.element.querySelector('div.multi-select-options')
+                optionsAllElement.style.height = 0 ;             
+            }
+
+        }
         if (this.options.search === true || this.options.search === 'true') {
             let search = this.element.querySelector('.multi-select-search');
             search.oninput = () => {
+                var filtered = [] 
                 this.element.querySelectorAll('.multi-select-option').forEach(option => {
                     option.style.display = option.querySelector('.multi-select-option-text').innerHTML.toLowerCase().indexOf(search.value.toLowerCase()) > -1 ? 'flex' : 'none';
-                });
+                    option.classList.remove('key-item-current')                                          
+                    if(option.style.display !== 'none') filtered.push(option)
+                })               
+                counter = 15 
+                filtered.length === 1?filtered[0].classList.add('key-item-current'):''          
             };
         }
         if (this.options.selectAll === true || this.options.selectAll === 'true') {
