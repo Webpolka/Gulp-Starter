@@ -45,7 +45,7 @@
 	--caret-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 	--checkbox-icon: url(../../icons/star-pull.svg);
 	// -----------------------------------------------------  ОБЩИЕ НАСТРОЙКИ МУЛЬТИСЕЛЕКТА ------------------------------------------------------------
-	--font-size: 2rem; // общий размер шрифта 
+	--font-size: 1rem; // общий размер шрифта 
 
 	--color-multi-main: #920a65; // цвет основной текста	
 	--color-placeholder: #d61010; // цвет placeholder верхней всегда открытой части мультиселекта
@@ -62,8 +62,8 @@
 
 
 	// ------------------------------------- ВЕРХНЯЯ ОСНОВНАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА КОТОРАЯ ВСТАВЛЯЕТЬСЯ В ВЕРСТКУ ---------------------------------------------
-	--top-header-padding-top: 1rem; // паддинг сверху верхней видимой части
-	--top-header-padding-bottom: 1rem; // паддинг снизу верхней видимой части
+	--top-header-padding-top: 0.3rem; // паддинг сверху верхней видимой части
+	--top-header-padding-bottom: 0.3rem; // паддинг снизу верхней видимой части
 	--top-header-padding-left: 1rem; // паддинг слева верхней видимой части
 	--top-header-padding-right: 1rem; // паддинг справа верхней видимой части
 	--top-header-border: 1px red solid; // бордер
@@ -72,9 +72,9 @@
 	--top-header-arrow-size: var(--font-size); // размер каретки 
 
 	// -----------ВЫБРАННЫЙ ПУНКТ КОТОРЫЙ ОТОБРАЖАЕТЬСЯ СВЕРХУ ------------
-	--top-header-option-bg: #40c979; // цвет фона выбранных пуктов которые отображаються после выбора в верхней части
-	--top-header-option-padding-top: 1rem; // паддинг сверху
-	--top-header-option-padding-bottom: 1rem; // паддинг снизу
+	--top-header-option-bg: none; // цвет фона выбранных пуктов которые отображаються после выбора в верхней части
+	--top-header-option-padding-top: 0.3rem; // паддинг сверху
+	--top-header-option-padding-bottom: 0.3rem; // паддинг снизу
 	--top-header-option-padding-left: 1rem; // паддинг слева
 	--top-header-option-padding-right: 1rem; // паддинг справа
 	--top-header-option-border: 1px #40c979 solid; // бордер

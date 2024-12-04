@@ -51,10 +51,10 @@
 	--font-size: 1rem; // общий размер шрифта 
 
 	--color-multi-main: #920a65; // цвет основной текста	
-	--color-placeholder: #d61010; // цвет placeholder верхней всегда открытой части мультиселекта
+	--color-placeholder: #545455; // цвет placeholder верхней всегда открытой части мультиселекта
 	--color-option-text: inherit; // цвет неактивного текста нижних выпадающих пунктов 
 	--color-option-text-active: #aec940; // цвет активного текста нижних выпадающих пунктов
-	--color-search-placeholder: #c5400b; // цвет placeholder поля поиска в выпадающем меню  
+	--color-search-placeholder: #1d6915; // цвет placeholder поля поиска в выпадающем меню  
 	--hover-bg-color: rgb(0, 0, 0, 0.08); // цвет фона пункта при наведении курсора мыши
 	--keydown-bg-color: rgb(0, 0, 0, 0.2);
 
@@ -64,22 +64,22 @@
 	--color-scrollbar-thumb-active: var(--color-multi-main);
 
 	// ------------------------------------- ВЕРХНЯЯ ОСНОВНАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА КОТОРАЯ ВСТАВЛЯЕТЬСЯ В ВЕРСТКУ ---------------------------------------------
-	--top-header-padding-top: 1rem; // паддинг сверху верхней видимой части
-	--top-header-padding-bottom: 1rem; // паддинг снизу верхней видимой части
+	--top-header-padding-top: 0.5rem; // паддинг сверху верхней видимой части
+	--top-header-padding-bottom: 0.5rem; // паддинг снизу верхней видимой части
 	--top-header-padding-left: 1rem; // паддинг слева верхней видимой части
 	--top-header-padding-right: 1rem; // паддинг справа верхней видимой части
-	--top-header-border: 1px red solid; // бордер
+	--top-header-border: 1px rgb(100, 88, 88) solid; // бордер
 	--top-header-border-color-active: #c1c9d0; // цвет активного бордера
 	--top-header-border-radius: 0; // закругление бордера
 	--top-header-arrow-size: var(--font-size); // размер каретки 
 
 	// -----------ВЫБРАННЫЙ ПУНКТ КОТОРЫЙ ОТОБРАЖАЕТЬСЯ СВЕРХУ ------------
-	--top-header-option-bg: #40c979; // цвет фона выбранных пуктов которые отображаються после выбора в верхней части
-	--top-header-option-padding-top: 1rem; // паддинг сверху
-	--top-header-option-padding-bottom: 1rem; // паддинг снизу
+	--top-header-option-bg: none; // цвет фона выбранных пуктов которые отображаються после выбора в верхней части
+	--top-header-option-padding-top: 0.5rem; // паддинг сверху
+	--top-header-option-padding-bottom: 0.5rem; // паддинг снизу
 	--top-header-option-padding-left: 1rem; // паддинг слева
 	--top-header-option-padding-right: 1rem; // паддинг справа
-	--top-header-option-border: 1px #40c979 solid; // бордер
+	--top-header-option-border: 1px #c98740 solid; // бордер
 	--top-header-option-border-radius: 0.5rem; // закругление бордера
 
 	// ---------------------------------------------------- НИЖНЯЯ ВЫПАДАЮЩАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА  ------------------------------------------------------------
@@ -90,8 +90,8 @@
 	--bottom-dropdown-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // затемнение
 
 	// ---------------- ПУНКТ НИЖНЕГО МУЛЬТИСЕЛЕКТА -----------------------
-	--bottom-option-padding-top: 0.5rem; // паддинг сверху
-	--bottom-option-padding-bottom: 0.5rem; // паддинг снизу
+	--bottom-option-padding-top: .3rem; // паддинг сверху
+	--bottom-option-padding-bottom: .3rem; // паддинг снизу
 	--bottom-option-padding-left: 1rem; // паддинг слева
 	--bottom-option-padding-right: 1rem; // паддинг справа
 	--bottom-option-border-radius: 0; // закругление бордера
@@ -99,7 +99,7 @@
 
 	// ---------------- ПУНКТ ПОИСК НИЖНЕГО МУЛЬТИСЕЛЕКТА ----------------
 	--bottom-search-color-bg: #d3baba; // цвет фона формы поиска
-	--bottom-search-padding: 1rem; // паддинг общий
+	--bottom-search-padding: 0.3rem; // паддинг общий
 	--bottom-search-border: 1px solid #9e2b05; // бордер
 	--bottom-search-border-radius: 0; // закругление бордера
 	--bottom-search-margin: 1rem; // отспупы общий	
@@ -326,6 +326,7 @@
 
 		.multi-select-option.multi-select-selected {
 			.multi-select-option-radio {
+				border: 1px var(--bottom-option-radio-active-border-color) solid;
 				border-color: var(--bottom-option-radio-active-border-color);
 				background-color: var(--bottom-option-radio-active-bg);
 				background-image: var(--checkbox-icon);

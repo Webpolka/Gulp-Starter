@@ -8,6 +8,7 @@ export class OneSelect {
             closeListOnItemSelect: false,
             edge: 0,
             numberCells: 7,                                 // количество выпадающих пунктов
+            selectInDOM: true,
             name: '',
             width: '',
             height: '',
@@ -43,11 +44,58 @@ export class OneSelect {
         this.related
 
         this.element = this._template();
-        this.selectElement.replaceWith(this.element);
+        if (this.options.selectInDOM) {
+            this.selectElement.after(this.element);
+            this.selectElement.classList.add('visually-hidden')
+            this.selectElement.setAttribute('tabindex', '-1')
+            this.selectElement.setAttribute('aria-hidden', 'true')
+        } else {
+            this.selectElement.replaceWith(this.element);
+        }
         this._updateSelected();
         this._eventHandlers();
         this.current
         this.visibleOptions
+        this.doll
+        this.memoryCellHeight
+        this.searching = this.element.querySelector('.one-select-search')
+    }
+  
+    _updateSelectElement(option) {
+        this.selectElement.querySelectorAll('option').forEach(opt => {
+            opt.removeAttribute('selected')
+            if (opt.getAttribute('value') == option.getAttribute('data-value')) {
+                opt.setAttribute('selected', 'true')
+            }
+        })
+    }
+    _openHeightSelect() {
+        if (this.options.search) { var searchElement = this.element.querySelector('div.one-select-search-wrap') }
+        var cellHeight
+        var cellElement = this.element.querySelector('div.one-select-option')
+        var optionsAllElement = this.element.querySelector('div.one-select-options')
+        var optionsOnlyElement = this.element.querySelector('div.one-select-options-only')
+        !this.memoryCellHeight ? this.memoryCellHeight = cellElement.scrollHeight : ''
+        this.memoryCellHeight ? cellHeight = this.memoryCellHeight : cellHeight = cellElement.scrollHeight
+        var optionsOnlyHeight = this.options.numberCells * cellHeight
+
+        // console.log('Высота поиска - ', searchElement.scrollHeight,
+        //     ' Высота ячейки -  ', cellElement.scrollHeight,
+        //     ' Высота Оптионс  - ', optionsOnlyHeight);
+
+        let paddingDropdownTop = parseInt(getComputedStyle(optionsAllElement, null).paddingTop)
+        let paddingDropdownBottom = parseInt(getComputedStyle(optionsAllElement, null).paddingBottom)
+        if (this.options.search) { var searchElementHeight = searchElement.scrollHeight } else { var searchElementHeight = 0 }
+        optionsAllElement.style.height = optionsOnlyHeight + searchElementHeight + paddingDropdownTop + paddingDropdownBottom + 'px';
+        optionsOnlyElement.style.height = optionsOnlyHeight + 'px'
+
+        this.element.querySelectorAll('.one-select-option').forEach(el => {
+            el.classList.remove('key-item-current')
+        })
+    }
+    _closeHeightSelect() {
+        var optionsAllElement = this.element.querySelector('div.one-select-options')
+        optionsAllElement.style.height = 0;
     }
 
     _scrollDown(optionItem, counter, optionAmount) {
@@ -123,11 +171,24 @@ export class OneSelect {
 
     _eventHandlers() {
         // ---------------------------- КЛАВА ----------------------------------
-        let searchInput = this.element.querySelector('.one-select-search')
+        if (this.options.selectInDOM) this.selectElement.querySelectorAll('option')[0].setAttribute('selected', 'true')
+        if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none' ; el.removeAttribute('type') }) }
+
         let counter = 15
         let related
 
-        searchInput.addEventListener('keydown', (event) => {
+        if (this.options.search) {
+            var listener = this.element.querySelector('.one-select-search')
+        } else {
+            this.doll = document.createElement('input')
+            this.doll.classList.add('visually-hidden')
+            this.doll.setAttribute('name', 'doll')    /// ----1111
+            this.doll.setAttribute('tabindex', '-1')   /// ---1111
+            document.querySelector('div.one-select-options').appendChild(this.doll)
+            var listener = this.doll;
+        }
+
+        listener.addEventListener('keydown', (event) => {
 
             this.visibleOptions = []
             this.element.querySelectorAll('.one-select-option').forEach(item => {
@@ -167,10 +228,13 @@ export class OneSelect {
         // ---------------------------- Мышка ----------------------------------
         let headerElement = this.element.querySelector('.one-select-header');
         this.related = this.element.querySelector('.one-select-options').querySelector('.one-select-selected')
-        var optionsAllElement = this.element.querySelector('div.one-select-options')
         this.element.querySelectorAll('.one-select-option').forEach(option => {
             option.onclick = () => {
+                
+                this.options.selectInDOM ? this._updateSelectElement(option) : ''
+                if (this.doll) this.doll.focus();
                 let selected = true;
+
                 if (!option.classList.contains('one-select-selected')) {
                     if (this.options.max && this.selectedValues.length >= 1) {
                         this.related.classList.remove('one-select-selected');
@@ -180,8 +244,9 @@ export class OneSelect {
                         selected = false;
                         option.classList.add('one-select-selected');
                         if (this.options.closeListOnItemSelect === true || this.options.closeListOnItemSelect === 'true') {
-                            headerElement.classList.remove('one-select-header-active');                          
-                            optionsAllElement.style.height = 0;
+                            headerElement.classList.remove('one-select-header-active');
+                            this._closeHeightSelect()
+                            this.doll ? this.doll.blur() : this.searching.blur();
                         }
                         this.related = option
                         if (this.element.querySelector('.one-select-header-option')) {
@@ -190,8 +255,11 @@ export class OneSelect {
                         } else {
                             headerElement.insertAdjacentHTML('afterbegin', `<span class="one-select-header-option" data-value="${option.dataset.value}">${option.querySelector('.one-select-option-text').innerHTML}</span>`);
                         }
+
                         this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                         this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
+                        if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true' ;el.style.display = 'none' ; el.removeAttribute('type')}) }
+
                         return;
                     }
                     option.classList.add('one-select-selected');
@@ -206,6 +274,8 @@ export class OneSelect {
 
                     this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                     this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
+                    if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true';el.style.display = 'none' ; el.removeAttribute('type') }) }
+
                 } else {
                     option.classList.remove('one-select-selected');
                     this.element.querySelectorAll('.one-select-header-option').forEach(headerOption => headerOption.dataset.value == option.dataset.value ? headerOption.remove() : '');
@@ -223,8 +293,9 @@ export class OneSelect {
                 }
                 this.element.querySelectorAll('.one-select-option').forEach(option => option.style.display = 'flex');
                 if (this.options.closeListOnItemSelect === true || this.options.closeListOnItemSelect === 'true') {
-                    headerElement.classList.remove('one-select-header-active');                  
-                    optionsAllElement.style.height = 0;
+                    headerElement.classList.remove('one-select-header-active');
+                    this._closeHeightSelect()
+                    this.doll ? this.doll.blur() : this.searching.blur();
                 }
                 this.options.onChange(option.dataset.value, option.querySelector('.one-select-option-text').innerHTML, option);
                 if (selected) {
@@ -239,26 +310,12 @@ export class OneSelect {
         headerElement.onclick = () => {
             headerElement.classList.toggle('one-select-header-active')
             if (headerElement.classList.contains('one-select-header-active')) {
-                var searchElement = this.element.querySelector('div.one-select-search-wrap')
-                if (this.visibleOptions) { var cellElement = this.visibleOptions[0] } else {
-                    var cellElement = this.element.querySelector('div.one-select-option')
-                }
-                var optionsAllElement = this.element.querySelector('div.one-select-options')
-                var optionsOnlyElement = this.element.querySelector('div.one-select-options-only')
-                var optionsOnlyHeight = this.options.numberCells * cellElement.scrollHeight
-
-                // console.log('Высота поиска - ', searchElement.scrollHeight,
-                //     ' Высота ячейки -  ', cellElement.scrollHeight,
-                //     ' Высота Оптионс  - ', optionsOnlyHeight);
-
-                let paddingDropdownTop = parseInt(getComputedStyle(optionsAllElement, null).paddingTop)
-                let paddingDropdownBottom = parseInt(getComputedStyle(optionsAllElement, null).paddingBottom)
-                optionsAllElement.style.height = optionsOnlyHeight + searchElement.scrollHeight + paddingDropdownTop + paddingDropdownBottom + 'px';
-                optionsOnlyElement.style.height = optionsOnlyHeight + 'px'
-
+                this._openHeightSelect()
+                counter = 15
+                setTimeout(() => { this.doll ? this.doll.focus() : this.searching.focus() }, 400)
             } else {
-                var optionsAllElement = this.element.querySelector('div.one-select-options')
-                optionsAllElement.style.height = 0;
+                this._closeHeightSelect()
+                this.doll ? this.doll.blur() : this.searching.blur();
 
             }
         }
@@ -280,12 +337,22 @@ export class OneSelect {
         if (this.selectElement.id && document.querySelector('label[for="' + this.selectElement.id + '"]')) {
             document.querySelector('label[for="' + this.selectElement.id + '"]').onclick = () => {
                 headerElement.classList.toggle('one-select-header-active');
+                if (headerElement.classList.contains('one-select-header-active')) {
+                    this._openHeightSelect()
+                    this.doll && this.doll.focus();
+                    this.searching && this.searching.focus();
+                } else {
+                    this._closeHeightSelect()
+                    this.doll && this.doll.blur();
+                    this.searching && this.searching.blur()
+                }
             };
         }
         document.addEventListener('click', event => {
             if (!event.target.closest('.' + this.name) && !event.target.closest('label[for="' + this.selectElement.id + '"]')) {
                 headerElement.classList.remove('one-select-header-active');
-
+                this._closeHeightSelect()
+                this.doll ? this.doll.blur() : this.searching.blur();
             }
         });
     }

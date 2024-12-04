@@ -728,11 +728,11 @@ nav.header-menu.horizontal {
 .mobile-burger {
 
     //---- Стилизуем Бургер ------
-    --burgerWidth-: 4rem;
-    --burgerHeight-: 4rem;
-    --barHeight-: 0.7rem;
-    --barColor-: rgb(124, 111, 111);
-    --barBorderRadius-: 10px;
+    --burgerWidth-: 1rem;
+    --burgerHeight-: 1rem;
+    --barHeight-: 0.2rem;
+    --barColor-: rgb(131, 13, 13);
+    --barBorderRadius-: 3px;
     //----------------------------
     display: none;  
    

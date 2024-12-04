@@ -109,14 +109,15 @@ new MultiSelect(multiSelect, {
   selectAllText: 'Выбрать все !',              // текст для пункта ВЫБРАТЬ ВСЕ
   howMuchText: "выбрано !",                    // текст для варианта listAll = false показ количества выбранных елементов числом
   searchText: 'Поиск...',                      // плейсхолдер формы ПОИСКА
-  showCounter: true,                           // показывать ли счетчик выбранных пунктов 
-  max: 1,                                      // количество выбираемых пунктов
-  search: true,                                // показывать форму ПОИСКА
+  showCounter: false,                           // показывать ли счетчик выбранных пунктов 
+  max: 5,                                      // количество выбираемых пунктов
+  search: false,                                // показывать форму ПОИСКА
   selectAll: true,                             // показывать пункт ВЫБРАТЬ ВСЕ   
   listAll: true,                               // true - перечислять все элементы, false - количество числом
-  closeListOnItemSelect: true,                 // закрывать ли после выбора
+  closeListOnItemSelect: false,                 // закрывать ли после выбора
   edge: 0,                                     // сдвиг для стрелочек вверх вних
   numberCells: 7,                              // количество выпадающих пунктов
+  selectInDOM: true,                              // если true то остаеться select, если false то только inputs в div
   name: 'name1',                                    // добавить атрибут 
   width: '',                                   // онлайн стили ширина
   height: '',                                  // онлайн стили высота родителя
@@ -134,10 +135,11 @@ new OneSelect(oneSelect, {
   placeholder: 'Выбирайте один любой фрукт !',    // плейсхолдер селекта
   searchText: 'Поиск...',                         // плейсхолдер формы ПОИСКА
   search: true,                                   // показывать форму ПОИСКА
-  closeListOnItemSelect: true,                   // закрывать ли после выбора
+  closeListOnItemSelect: true,                    // закрывать ли после выбора
   edge: 0,                                        // сдвиг для стрелок вверх вниз
   numberCells: 5,                                 // количество выпадающих пунктов
-  name: 'name2',                                       // добавить атрибут 
+  selectInDOM: true,                              // если true то остаеться select, если false то только inputs в div
+  name: 'name2',                                  // добавить атрибут 
   width: '',                                      // онлайн стили ширина
   height: '',                                     // онлайн стили высота родителя
   dropdownWidth: '',                              // онлайн стили ширина выпадающего списка                                                 
@@ -174,8 +176,8 @@ new OneSelect(oneSelect, {
 
 import headerMenu from './modules/header-menu.js';
 const optionsMenu = {
-  burgerPosition: 'right',           // кнопка бургер справа
-  direction: 'vertical',           // напрвление меню
+  burgerPosition: 'left',           // кнопка бургер справа
+  direction: 'horizontal',           // напрвление меню
   method: 'opacity',                 // opacity, display
   methodHeaderSpeed: 300,            // скорость метода для главного меню
   methodMobileSpeed: 800,            // скорость метода для мобильного меню

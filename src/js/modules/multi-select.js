@@ -14,6 +14,7 @@ export class MultiSelect {
             closeListOnItemSelect: false,
             edge: 0,
             numberCells: 5,
+            selectInDOM: false,                              // если true то остаеться select, если false то только inputs в div
             name: '',
             width: '',
             height: '',
@@ -50,12 +51,32 @@ export class MultiSelect {
             }
         }
         this.element = this._template();
-        this.selectElement.replaceWith(this.element);
+        if (this.options.selectInDOM) {
+            this.selectElement.after(this.element);
+            this.selectElement.classList.add('visually-hidden')
+            this.selectElement.setAttribute('tabindex', '-1')
+            this.selectElement.setAttribute('aria-hidden', 'true')
+        } else {
+            this.selectElement.replaceWith(this.element);
+        }
         this._updateSelected();
         this._eventHandlers();
         this.current
-        this.visibleOptions 
+        this.visibleOptions
+        this.doll
+        this.memoryCellHeight
+        this.searching = this.element.querySelector('.multi-select-search')
+    }
+    _updateSelectElement(optionsArray) {
+        this.selectElement.querySelectorAll('option').forEach(opt => {
+            opt.removeAttribute('selected')
+            optionsArray.forEach(arrayItem => {
+                if (opt.getAttribute('value') == arrayItem.getAttribute('data-value')) {
+                    opt.setAttribute('selected', 'true')
+                }
+            })
 
+        })
     }
     _scrollDown(optionItem, counter, optionAmount) {
         if (!optionItem.classList.contains('multi-select-all')) {
@@ -100,6 +121,36 @@ export class MultiSelect {
             }
         }
     }
+    _openHeightSelect() {
+        if (this.options.search) { var searchElement = this.element.querySelector('div.multi-select-search-wrap') }
+        if (this.options.selectAll) { var allElement = this.element.querySelector('div.multi-select-all') }
+
+        var cellHeight
+        var cellElement = this.element.querySelector('div.multi-select-option')
+        var optionsAllElement = this.element.querySelector('div.multi-select-options')
+        var optionsOnlyElement = this.element.querySelector('div.multi-select-options-only')
+        !this.memoryCellHeight ? this.memoryCellHeight = cellElement.scrollHeight : ''
+        this.memoryCellHeight ? cellHeight = this.memoryCellHeight : cellHeight = cellElement.scrollHeight
+        var optionsOnlyHeight = this.options.numberCells * cellHeight
+
+        // console.log('Высота поиска - ', searchElement.scrollHeight,               
+        //     ' Высота ячейки -  ', cellElement.scrollHeight,
+        //     ' Высота Оптионс  - ', optionsOnlyHeight);
+
+        let paddingDropdownTop = parseInt(getComputedStyle(optionsAllElement, null).paddingTop)
+        let paddingDropdownBottom = parseInt(getComputedStyle(optionsAllElement, null).paddingBottom)
+        if (this.options.selectAll) { var allElementHeight = allElement.scrollHeight } else { var allElementHeight = 0 }
+        if (this.options.search) { var searchElementHeight = searchElement.scrollHeight } else { var searchElementHeight = 0 }
+        optionsAllElement.style.height = optionsOnlyHeight + allElementHeight + searchElementHeight + paddingDropdownTop + paddingDropdownBottom + 'px';
+        optionsOnlyElement.style.height = optionsOnlyHeight + 'px'
+        this.element.querySelectorAll('.multi-select-option').forEach(el => {
+            el.classList.remove('key-item-current')
+        })
+    }
+    _closeHeightSelect() {
+        var optionsAllElement = this.element.querySelector('div.multi-select-options')
+        optionsAllElement.style.height = 0;
+    }
 
     _template() {
         let optionsHTML = '';
@@ -137,32 +188,45 @@ export class MultiSelect {
             </div>
         `;
         let element = document.createElement('div');
-        element.setAttribute('name' , `${this.name}`)
+        element.setAttribute('name', `${this.name}`)
         element.innerHTML = template;
         return element;
     }
 
     _eventHandlers() {
         // ---------------------------- КЛАВА ---------------------------------
-        let searchInput = this.element.querySelector('.multi-select-search')    
         let counter = 15
         let related
-        searchInput.addEventListener('keydown', (event) => {
+
+        if (this.options.search) {
+            var listener = this.element.querySelector('.multi-select-search')
+        } else {
+            this.doll = document.createElement('input')
+            this.doll.classList.add('visually-hidden')
+            this.doll.setAttribute('name', 'doll')
+            this.doll.setAttribute('tabindex', '-1')
+            document.querySelector('div.multi-select-options').appendChild(this.doll)
+            var listener = this.doll;
+        }
+
+        listener.addEventListener('keydown', (event) => {
+            if (!this.options.search) { event.preventDefault() }
 
             this.visibleOptions = []
-            this.element.querySelectorAll('.multi-select-option').forEach(item => {          
-                getComputedStyle(item , null).display == 'flex'?this.visibleOptions.push(item):''
-            })               
-            
+            this.element.querySelectorAll('.multi-select-option').forEach(item => {
+                getComputedStyle(item, null).display == 'flex' ? this.visibleOptions.push(item) : ''
+            })
+
             let searchItems = this.visibleOptions
-            event.stopPropagation()          
+            event.stopPropagation()
 
             if (event.code === "ArrowUp" || event.code === "ArrowDown") {
                 event.code === "ArrowUp" ? counter-- : counter++;
 
+
                 if (counter < 0) counter = searchItems.length - 1
                 if (counter > searchItems.length - 1) counter = 0
-         
+
                 if (event.code === "ArrowDown") this._scrollDown(searchItems[counter], counter, searchItems.length - 1);
                 if (event.code === "ArrowUp") this._scrollUp(searchItems[counter], counter, searchItems.length - 1);
 
@@ -178,12 +242,13 @@ export class MultiSelect {
 
                 document.querySelectorAll(".key-item-current").forEach(el => {
                     el.classList.remove('key-item-current')
-                });                
-                
+                });
+
                 currentDropdownItem && currentDropdownItem.click();
-                event.preventDefault()
+                if (this.options.search) { event.preventDefault() }
             }
         })
+
 
 
 
@@ -191,6 +256,8 @@ export class MultiSelect {
         let headerElement = this.element.querySelector('.multi-select-header');
         this.element.querySelectorAll('.multi-select-option').forEach(option => {
             option.onclick = () => {
+
+                this.doll ? this.doll.focus() : this.searching.focus();
                 let selected = true;
                 if (!option.classList.contains('multi-select-selected')) {
                     if (this.options.max && this.selectedValues.length >= this.options.max) {
@@ -205,8 +272,9 @@ export class MultiSelect {
                             headerElement.insertAdjacentHTML('afterbegin', `<span class="multi-select-header-option" data-value="${option.dataset.value}">${option.querySelector('.multi-select-option-text').innerHTML}</span>`);
                         }
                     }
-                    this.element.querySelector('.multi-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}[]" value="${option.dataset.value}">`);
+                    this.element.querySelector('.multi-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                     this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
+                    if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none' ; el.removeAttribute('type')}) }
                 } else {
                     option.classList.remove('multi-select-selected');
                     this.element.querySelectorAll('.multi-select-header-option').forEach(headerOption => headerOption.dataset.value == option.dataset.value ? headerOption.remove() : '');
@@ -241,9 +309,9 @@ export class MultiSelect {
                     this.selectedValues.length >= this.options.max) {
                     headerElement.classList.remove('multi-select-header-active');
                     this.element.querySelectorAll('.multi-select-option').forEach(el => {
-                        el.classList.remove("key-current")                       
-                        var optionsAllElement = this.element.querySelector('div.multi-select-options')
-                        optionsAllElement.style.height = 0 ;    
+                        el.classList.remove("key-current")
+                        this._closeHeightSelect()
+                        this.doll ? this.doll.blur() : this.searching.blur();
                     })
 
                 }
@@ -253,6 +321,15 @@ export class MultiSelect {
                 } else {
                     this.options.onUnselect(option.dataset.value, option.querySelector('.multi-select-option-text').innerHTML, option);
                 }
+                ////  ----------------- OPTIONS ARRAY  ---------------------
+                if (this.options.selectInDOM) {
+                    let optionsArray = []
+                    this.element.querySelectorAll('.multi-select-option').forEach(opt => {
+                        if (opt.classList.contains('multi-select-selected')) optionsArray.push(opt)
+                    })
+                    this._updateSelectElement(optionsArray)
+                }
+                //// ------------- END OPTIONS ARRAY  ----------------------
             };
         });
 
@@ -260,39 +337,26 @@ export class MultiSelect {
         headerElement.onclick = () => {
             headerElement.classList.toggle('multi-select-header-active')
             if (headerElement.classList.contains('multi-select-header-active')) {
-                var searchElement = this.element.querySelector('div.multi-select-search-wrap')
-                var allElement = this.element.querySelector('div.multi-select-all')
-                var cellElement = this.element.querySelector('div.multi-select-option')
-                var optionsAllElement = this.element.querySelector('div.multi-select-options')
-                var optionsOnlyElement = this.element.querySelector('div.multi-select-options-only')
-                var optionsOnlyHeight = this.options.numberCells * cellElement.scrollHeight
-
-                console.log('Высота поиска - ', searchElement.scrollHeight,
-                    ' Высота выбрать все - ', allElement.scrollHeight,
-                    ' Высота ячейки -  ', cellElement.scrollHeight,
-                    ' Высота Оптионс  - ', optionsOnlyHeight);
-
-                let paddingDropdownTop = parseInt(getComputedStyle(optionsAllElement, null).paddingTop)
-                let paddingDropdownBottom = parseInt(getComputedStyle(optionsAllElement, null).paddingBottom)               
-                optionsAllElement.style.height = optionsOnlyHeight + allElement.scrollHeight + searchElement.scrollHeight  + paddingDropdownTop + paddingDropdownBottom + 'px';               
-                optionsOnlyElement.style.height = optionsOnlyHeight + 'px'              
+                this._openHeightSelect()
+                counter = 15
+                setTimeout(() => { this.doll ? this.doll.focus() : this.searching.focus() }, 400)
             } else {
-                var optionsAllElement = this.element.querySelector('div.multi-select-options')
-                optionsAllElement.style.height = 0 ;             
+                this._closeHeightSelect()
+                this.doll ? this.doll.blur() : this.searching.blur();
             }
 
         }
         if (this.options.search === true || this.options.search === 'true') {
             let search = this.element.querySelector('.multi-select-search');
             search.oninput = () => {
-                var filtered = [] 
+                var filtered = []
                 this.element.querySelectorAll('.multi-select-option').forEach(option => {
                     option.style.display = option.querySelector('.multi-select-option-text').innerHTML.toLowerCase().indexOf(search.value.toLowerCase()) > -1 ? 'flex' : 'none';
-                    option.classList.remove('key-item-current')                                          
-                    if(option.style.display !== 'none') filtered.push(option)
-                })               
-                counter = 15 
-                filtered.length === 1?filtered[0].classList.add('key-item-current'):''          
+                    option.classList.remove('key-item-current')
+                    if (option.style.display !== 'none') filtered.push(option)
+                })
+                counter = 15
+                filtered.length === 1 ? filtered[0].classList.add('key-item-current') : ''
             };
         }
         if (this.options.selectAll === true || this.options.selectAll === 'true') {
@@ -311,11 +375,22 @@ export class MultiSelect {
         if (this.selectElement.id && document.querySelector('label[for="' + this.selectElement.id + '"]')) {
             document.querySelector('label[for="' + this.selectElement.id + '"]').onclick = () => {
                 headerElement.classList.toggle('multi-select-header-active');
+                if (headerElement.classList.contains('multi-select-header-active')) {
+                    this._openHeightSelect()
+                    this.doll && this.doll.focus();
+                    this.searching && this.searching.focus();
+                } else {
+                    this._closeHeightSelect()
+                    this.doll && this.doll.blur();
+                    this.searching && this.searching.blur()
+                }
             };
         }
         document.addEventListener('click', event => {
             if (!event.target.closest('.' + this.name) && !event.target.closest('label[for="' + this.selectElement.id + '"]')) {
                 headerElement.classList.remove('multi-select-header-active');
+                this.doll ? this.doll.blur() : this.searching.blur();
+                this._closeHeightSelect()
             }
         });
     }
