@@ -60,12 +60,12 @@ export class OneSelect {
         this.memoryCellHeight
         this.searching = this.element.querySelector('.one-select-search')
     }
-  
+
     _updateSelectElement(option) {
         this.selectElement.querySelectorAll('option').forEach(opt => {
             opt.removeAttribute('selected')
             if (opt.getAttribute('value') == option.getAttribute('data-value')) {
-                opt.setAttribute('selected', 'true')
+                opt.setAttribute('selected', '')
             }
         })
     }
@@ -93,9 +93,19 @@ export class OneSelect {
             el.classList.remove('key-item-current')
         })
     }
+    _consoleFormOptions(){
+         // -------------- ВЫВОДИМ ВЫБРАННЫЕ ОПЦИИ ИЗ ОБЪЕКТА FormData ------------      
+         var currentElement
+         if (this.element.querySelector('.one-select-search')) { currentElement = this.element.querySelector('.one-select-search') }
+         if (this.element.querySelector('[name="doll"]')) { currentElement = this.element.querySelector('[name="doll"]') }
+         if (this.selectInDOM) { currentElement = this.selectElement }
+         console.log('Набор кастомного Cелекта - ', new FormData(currentElement.form).getAll(this.name));    
+    }
+
     _closeHeightSelect() {
         var optionsAllElement = this.element.querySelector('div.one-select-options')
-        optionsAllElement.style.height = 0;
+        optionsAllElement.style.height = 0;  
+        // this._consoleFormOptions()     
     }
 
     _scrollDown(optionItem, counter, optionAmount) {
@@ -171,8 +181,8 @@ export class OneSelect {
 
     _eventHandlers() {
         // ---------------------------- КЛАВА ----------------------------------
-        if (this.options.selectInDOM) this.selectElement.querySelectorAll('option')[0].setAttribute('selected', 'true')
-        if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none' ; el.removeAttribute('type') }) }
+        if (this.options.selectInDOM) this.selectElement.querySelectorAll('option')[0].setAttribute('selected', '')
+        if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none'; el.removeAttribute('type') }) }
 
         let counter = 15
         let related
@@ -230,9 +240,9 @@ export class OneSelect {
         this.related = this.element.querySelector('.one-select-options').querySelector('.one-select-selected')
         this.element.querySelectorAll('.one-select-option').forEach(option => {
             option.onclick = () => {
-                
+
                 this.options.selectInDOM ? this._updateSelectElement(option) : ''
-                if (this.doll) this.doll.focus();
+                this.doll ? this.doll.focus() : this.searching.focus();
                 let selected = true;
 
                 if (!option.classList.contains('one-select-selected')) {
@@ -258,7 +268,7 @@ export class OneSelect {
 
                         this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                         this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
-                        if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true' ;el.style.display = 'none' ; el.removeAttribute('type')}) }
+                        if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none'; el.removeAttribute('type') }) }
 
                         return;
                     }
@@ -274,7 +284,7 @@ export class OneSelect {
 
                     this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                     this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
-                    if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true';el.style.display = 'none' ; el.removeAttribute('type') }) }
+                    if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none'; el.removeAttribute('type') }) }
 
                 } else {
                     option.classList.remove('one-select-selected');
@@ -313,8 +323,11 @@ export class OneSelect {
                 this._openHeightSelect()
                 counter = 15
                 setTimeout(() => { this.doll ? this.doll.focus() : this.searching.focus() }, 400)
+
+
             } else {
                 this._closeHeightSelect()
+
                 this.doll ? this.doll.blur() : this.searching.blur();
 
             }

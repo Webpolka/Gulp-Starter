@@ -111,13 +111,13 @@ new MultiSelect(multiSelect, {
   searchText: 'Поиск...',                      // плейсхолдер формы ПОИСКА
   showCounter: false,                           // показывать ли счетчик выбранных пунктов 
   max: 5,                                      // количество выбираемых пунктов
-  search: false,                                // показывать форму ПОИСКА
+  search: true,                                // показывать форму ПОИСКА
   selectAll: true,                             // показывать пункт ВЫБРАТЬ ВСЕ   
   listAll: true,                               // true - перечислять все элементы, false - количество числом
   closeListOnItemSelect: false,                 // закрывать ли после выбора
   edge: 0,                                     // сдвиг для стрелочек вверх вних
   numberCells: 7,                              // количество выпадающих пунктов
-  selectInDOM: true,                              // если true то остаеться select, если false то только inputs в div
+  selectInDOM: false,                              // если true то остаеться select, если false то только inputs в div
   name: 'name1',                                    // добавить атрибут 
   width: '',                                   // онлайн стили ширина
   height: '',                                  // онлайн стили высота родителя

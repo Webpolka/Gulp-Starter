@@ -72,7 +72,7 @@ export class MultiSelect {
             opt.removeAttribute('selected')
             optionsArray.forEach(arrayItem => {
                 if (opt.getAttribute('value') == arrayItem.getAttribute('data-value')) {
-                    opt.setAttribute('selected', 'true')
+                    opt.setAttribute('selected', '')
                 }
             })
 
@@ -147,9 +147,19 @@ export class MultiSelect {
             el.classList.remove('key-item-current')
         })
     }
+    _consoleFormOptions(){
+        // -------------- ВЫВОДИМ ВЫБРАННЫЕ ОПЦИИ ИЗ ОБЪЕКТА FormData ------------      
+        var currentElement
+        if (this.element.querySelector('.multi-select-search')) { currentElement = this.element.querySelector('.multi-select-search') }
+        if (this.element.querySelector('[name="doll"]')) { currentElement = this.element.querySelector('[name="doll"]') }
+        if (this.selectInDOM) { currentElement = this.selectElement }
+        console.log('Набор кастомного Мультиселекта - ', new FormData(currentElement.form).getAll(this.name));    
+   }
+
     _closeHeightSelect() {
         var optionsAllElement = this.element.querySelector('div.multi-select-options')
         optionsAllElement.style.height = 0;
+        // this._consoleFormOptions()           
     }
 
     _template() {
@@ -274,7 +284,7 @@ export class MultiSelect {
                     }
                     this.element.querySelector('.multi-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
                     this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
-                    if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none' ; el.removeAttribute('type')}) }
+                    if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none'; el.removeAttribute('type') }) }
                 } else {
                     option.classList.remove('multi-select-selected');
                     this.element.querySelectorAll('.multi-select-header-option').forEach(headerOption => headerOption.dataset.value == option.dataset.value ? headerOption.remove() : '');
@@ -342,6 +352,7 @@ export class MultiSelect {
                 setTimeout(() => { this.doll ? this.doll.focus() : this.searching.focus() }, 400)
             } else {
                 this._closeHeightSelect()
+
                 this.doll ? this.doll.blur() : this.searching.blur();
             }
 
