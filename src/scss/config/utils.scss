@@ -1,13 +1,6 @@
 // Заголовки, общие БЄМ блоки и прочее...
-
-.close,
-.none {
-	display: none !important;
-}
-
-.open,
-.hover {
-	display: block !important;
+* {
+	user-select: none;
 }
 
 .visually-hidden {
@@ -45,11 +38,99 @@
 	justify-content: center;
 }
 
+
+.service-overlay {
+	position: fixed;
+	left: -100%;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	transition: background 0.3s ease-in-out;
+}
+
+.img-responsive {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+	overflow: hidden;
+}
+
+.video-overlay,
+.img-overlay {
+	position: relative;
+	display: block;
+	&:hover:before {
+		transform: scale(1);
+	}
+
+	&:hover {
+		z-index: 50;
+	}
+
+	&:before {
+		content: "";
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		transform: scale(0);
+		background: rgba(201, 199, 201, 0.05);
+		-webkit-transition: all 0.6s ease;
+		-moz-transition: all 0.6s ease;
+		-o-transition: all 0.6s ease;
+		-ms-transition: all 0.6s ease;
+		transition: all 0.6s ease;
+	}
+
+	&:after {
+		content: "";
+		cursor: pointer;
+		position: absolute;
+		top: 50%;
+		left: 50%;		
+		width: 5rem;
+		height: 5rem;
+		border-radius: 50%;
+		border: 1px solid var(--color-border);
+		background-color: rgb(26, 62, 62, 0.5);
+		background-position: center center;
+		/* x y */
+		background-size: 50%;
+		background-repeat: no-repeat;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		-ms-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-i;
+	}
+}
+
+.img-overlay {
+	&:hover:after {
+		transform: translate(-50%, -50%) scale(1) rotate(20deg);
+	}
+	&:after {
+		transform: translate(-50%, -50%) scale(0) rotate(-20deg);
+		background-image: url('../../icons/search-icon.svg');
+	}
+}
+.video-overlay {
+	&:hover:after {
+		transform: translate(-50%, -50%) scale(1);
+	}
+	&:after {
+		transform: translate(-50%, -50%) scale(0);
+		background-image: url('../../icons/video.svg');
+	}
+}
 //----------------------------------------------- Containers -----------------------------------------------------------------------
 .container {
-	margin-inline: auto;
-	max-inline-size: rem($max-width-container);
-	padding-inline: rem($main-offset);
+	max-width: 1210px;
+	width: 100%;
+	padding: 0 var(--container-padding);
 }
 
 .container-full {
@@ -61,7 +142,7 @@
 	padding: 0 var(--container-padding);
 	max-width: 50%;
 
-	@include mobile {
+	@include md {
 		max-width: 100%;
 	}
 }
@@ -71,7 +152,7 @@
 	max-width: 50%;
 	margin-left: auto;
 
-	@include mobile {
+	@include md {
 		max-width: 100%;
 	}
 }
@@ -79,7 +160,7 @@
 .container-right {
 	padding-left: calc((100% - var(--container-width)) / 2 + var(--container-padding));
 
-	@include tablet {
+	@include xl {
 		padding-left: var(--container-padding);
 	}
 }
@@ -87,7 +168,7 @@
 .container-left {
 	padding-right: calc((100% - var(--container-width)) / 2 + var(--container-padding));
 
-	@include tablet {
+	@include xl {
 		padding-right: var(--container-padding);
 	}
 }
@@ -96,11 +177,11 @@
 	padding-right: calc((100% - var(--container-width)) / 2 + (var(--container-width) / 2));
 	padding-left: calc((100% - var(--container-width)) / 2 + var(--container-padding));
 
-	@include tablet {
+	@include xl {
 		padding-left: var(--container-padding);
 	}
 
-	@include mobile {
+	@include md {
 		padding: 0 var(--container-padding);
 	}
 }
@@ -109,206 +190,13 @@
 	padding-left: calc((100% - var(--container-width)) / 2 + (var(--container-width) / 2));
 	padding-right: calc((100% - var(--container-width)) / 2 + var(--container-padding));
 
-	@include tablet {
+	@include xl {
 		padding-right: var(--container-padding);
 	}
 
-	@include mobile {
+	@include md {
 		padding: 0 var(--container-padding);
 	}
-}
-
-//------------------------------------------------------ Grid Ingrid ---------------------------------------------------------------
-
-.grid {
-	// width: 100%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	margin-left: rem(- $main-offset);
-	margin-right: rem(- $main-offset);
-}
-
-.ingrid-1 {
-	width: 100%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-2 {
-	width: 50%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-3 {
-	width: 33.333%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-4 {
-	width: 25%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-5 {
-	width: 20%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-6 {
-	width: 16.666%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-7 {
-	width: 14.285%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-8 {
-	width: 12.5%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-9 {
-	width: 11.111%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-11 {
-	width: 9.090%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-12 {
-	width: 8.333%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-//---------------
-.ingrid-10 {
-	width: 10%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-20 {
-	width: 20%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-30 {
-	width: 30%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-40 {
-	width: 40%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-50 {
-	width: 50%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-60 {
-	width: 60%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-70 {
-	width: 70%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-80 {
-	width: 80%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-80 {
-	width: 80%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-90 {
-	width: 90%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.ingrid-100 {
-	width: 100%;
-	height: inherit;
-	padding-left: rem($main-offset);
-	padding-right: rem($main-offset);
-}
-
-.line-start {
-	display: inline-flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-	gap: 0 rem(12);
-}
-
-.line-center {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-}
-.line-beetwen {
-	display: flex;
-	flex-direction: row;
-	align-items: center;	
-	justify-content: space-between;
-}
-
-.column-beetwen {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
 }
 
 //-------------------------------- Полоса влево за пределы контейнера в бесконечность ------------------------------------------
@@ -335,48 +223,45 @@
 		padding-top: var(--paddingTop);
 		padding-right: var(--paddingRight);
 		padding-bottom: var(--paddingBottom);
-		background-color: var(--backgroundColor);		
-		color: var(--color-main);		
+		background-color: var(--backgroundColor);
+		color: var(--color-main);
 	}
 }
-//----------------------------------------------------------Paddings and bred ----------------------------------------------------
-.pd5 {
-	padding: rem(15);
+
+.red {
+	color: rgb(128, 0, 0, 0.75) !important;
 }
 
-.pd10 {
-	padding: rem(10);
+.green {
+	color: rgb(0, 128, 0.75) !important;
 }
 
-.pd15 {
-	padding: rem(15);
-}
-
-.pd20 {
-	padding: rem(20);
-}
-
-.pd25 {
-	padding: rem(25);
-}
-
-.pd30 {
-	padding: rem(30);
+.green-accent {
+	color: rgb(0, 128, 0.75) !important;
+	text-shadow: 0px 0px 2px rgb(255, 255, 255, 1);
+	font-weight: bold !important;
 }
 
 .bred {
-	border: 1px solid red;
-}
-.gred{
-	border: 1px solid green;
+	border: 1px solid red !important;
 }
 
 //--------------------------------------------------------- Buttons ---------------------------------------------------------------
-.btn {
-	display: inline-block;
-	width: 100%;
-	padding: 1rem;
-	background-color: var(--color-main);
-	color: var(--color-black);
-	border: 1px solid var(--color-black);
+.btn-main {
+	font-size: rem(16);
+	font-weight: 600;
+	line-height: rem(20);
+	color: var(--color-white);
+	padding: rem(16) rem(36);
+	background-color: var(--color-btn);
+	border-radius: 0.25rem;
+	transition: all 0.3s ease-in-out;
+
+	&:hover {
+		background-color: var(--color-btn-hover);
+	}
+}
+
+.page {
+	min-height: 120vh;
 }

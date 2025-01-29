@@ -7,6 +7,14 @@
 }
 
 @font-face {
+	font-family: Inter;
+	font-display: swap;
+	src: url("../fonts/Inter-SemiBold.woff2") format("woff2");
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
 	font-family: NextArt;
 	font-display: swap;
 	src: url("../fonts/NextArt-Bold.woff2") format("woff2");
@@ -15,17 +23,41 @@
 }
 
 @font-face {
-	font-family: NextArt;
+	font-family: NunitoSans;
 	font-display: swap;
-	src: url("../fonts/NextArt-Regular.woff2") format("woff2");
+	src: url("../fonts/NunitoSans-Bold.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: NunitoSans;
+	font-display: swap;
+	src: url("../fonts/NunitoSans-ExtraBold.woff2") format("woff2");
+	font-weight: 800;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: NunitoSans;
+	font-display: swap;
+	src: url("../fonts/NunitoSans-Light.woff2") format("woff2");
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: NunitoSans;
+	font-display: swap;
+	src: url("../fonts/NunitoSans-Regular.woff2") format("woff2");
 	font-weight: 400;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: NextArt;
+	font-family: NunitoSans;
 	font-display: swap;
-	src: url("../fonts/NextArt-SemiBold.woff2") format("woff2");
+	src: url("../fonts/NunitoSans-SemiBold.woff2") format("woff2");
 	font-weight: 600;
 	font-style: normal;
 }

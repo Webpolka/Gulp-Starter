@@ -3,125 +3,19 @@
 @@include('html/components/head.html', {
 'title': 'Главная'
 })
-
-
-
-<body>
+<body class="light-mode">
   <div class="wrapper">
+    <div class="service-overlay"></div>
     @@include('html/sections/header.html')
     <main class="page">
-      <div class="container">
-        <!-- ========== Start Loading ========== -->
-
-        <div class="loading-page" id="loading-page"></div>
-        <!-- @@include('html/examples/product-gallery-example.html') -->
-        <form action="" id="dataform">
-          <!-- <label for="fruits">Fruits</label> -->
-          <select id="fruits" name="fruits" data-placeholder="Добавить фруктики..." data-one-select>
-            <option value="Apple">Apple</option>
-            <option value="Banana">Banana</option>
-            <option value="Blueberry">Blueberry</option>
-            <option value="Cherry">Cherry</option>
-            <option value="Cranberry">Cranberry</option>
-            <option value="Grapes">Grapes</option>
-            <option value="Kiwi">Kiwi</option>
-            <option value="Mango">Mango</option>
-            <option value="Orange">Orange</option>
-            <option value="Peach">Peach</option>
-            <option value="Pear">Pear</option>
-            <option value="Pineapple">Pineapple</option>
-            <option value="Raspberry">Raspberry</option>
-            <option value="Strawberry">Strawberry</option>
-            <option value="Watermelon">Watermelon</option>
-          </select>
-        </form>
-
-        <form action="" id="dataform2">
-        <!-- <label for="vegetables">Vegetables</label> -->
-        <select id="vagetables" name="vegetables" data-placeholder="Добавить овощи..." multiple data-multi-select>
-          <option value="Apple">Apple</option>
-          <option value="Banana">Banana</option>
-          <option value="Blueberry">Blueberry</option>
-          <option value="Cherry">Cherry</option>
-          <option value="Cranberry">Cranberry</option>
-          <option value="Grapes">Grapes</option>
-          <option value="Kiwi">Kiwi</option>
-          <option value="Mango">Mango</option>
-          <option value="Orange">Orange</option>
-          <option value="Peach">Peach</option>
-          <option value="Pear">Pear</option>
-          <option value="Pineapple">Pineapple</option>
-          <option value="Raspberry">Raspberry</option>
-          <option value="Strawberry">Strawberry</option>
-          <option value="Watermelon">Watermelon</option>
-        </select>
-        </form>
-
-        <div class="accordion">
-          <div class="accordion__item">
-            <div class="accordion__header">Элемент 1</div>
-            <div class="accordion__content">
-              <p>Контент 1</p>
-            </div>
-          </div>
-        </div>
-
-        <div rating-id="1" class="rating-stars"></div>
-
-
-        <button id="mode-switcher"></button>
-
-        <!-- <section class="splide" aria-labelledby="carousel-heading">
-        <div class="splide-custom-nav">
-        <div class="splide-custom-nav__left">
-          <h2 class='title-1'>Basic Structure Example</h2>
-        </div>
-        
-        <div class="splide-custom-nav__right">
-          <div class="splide__arrows"></div>     
-          <div class="splide__pagination"></div>  
-        </div>
-        </div> -->
-
-        <style>
-          .ibg {
-            min-height: 1000px;
-          }
-        </style>
-        <div class="splide__track">
-          <ul class="splide__list">
-            <li class="splide__slide">
-              <div class="ibg"><img src="images/post-1.jpg" alt=""></div>
-            </li>
-            <li class="splide__slide">
-              <div class="ibg"><img src="images/post-2.jpg" alt=""></div>
-            </li>
-            <li class="splide__slide">
-              <div class="ibg"><img src="images/post-3.jpg" alt=""></div>
-            </li>
-            <li class="splide__slide">
-              <div class="ibg"><img src="images/post-4.jpg" alt=""></div>
-            </li>
-            <li class="splide__slide">
-              <div class="ibg"><img src="images/post-5.jpg" alt=""></div>
-            </li>
-            <li class="splide__slide">
-              <div class="ibg"><img src="images/post-6.jpg" alt=""></div>
-            </li>
-          </ul>
-        </div>
-        <!-- </section>  -->
-
-        <ul class="breadcrumb" id="breadcrumb">
-          <li><a href="#">Главная</a></li>
-          <li><a href="#">Картины</a></li>
-          <li><a href="#">Лето 15</a></li>
-          <li><a href="#">Горячие головы</a></li>
-          <li><a href="#">Зимние каникулы</a></li>
-        </ul>
-
-
-      </div>
+     
+        @@include('html/sections/section-one.html') 
+        @@include('html/sections/section-two.html')       
+        @@include('html/sections/section-three.html')   
+        @@include('html/sections/section-four.html')  
+        @@include('html/sections/section-five.html')  
+        @@include('html/sections/section-six.html')  
+        @@include('html/sections/section-letter.html')  
     </main>
     @@include('html/sections/footer.html')
   </div>

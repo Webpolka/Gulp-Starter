@@ -1,0 +1,31 @@
+.sections{
+    padding: rem(100) 0;
+    @include xl{
+        padding: rem(50) 0;
+    }
+}
+.sections-content{    
+    b{
+        display: block;
+        font-size: rem(24);
+        line-height: rem(20);
+        font-weight: 400;
+        color: var(--color-accent);        
+        margin-bottom: rem(8);
+    }
+    h2{
+        font-size: rem(32);
+        font-weight: 800;
+        line-height: 120%;
+        color: var(--color-title);
+        margin-bottom: rem(40);
+    }
+    p{
+        font-size: rem(18);
+        font-weight: 400;
+        line-height: 150%;
+        color: var(--color-main);
+        margin-bottom: rem(40);
+    }
+    
+}

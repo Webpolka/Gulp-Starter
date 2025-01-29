@@ -1,0 +1,48 @@
+.section-two {
+
+    .picture-items {
+        display: flex;
+        flex-direction: row;
+        transform: translateX(0);
+
+        @include xl {
+            transform: translateX(12.5%);
+        }
+
+        &__1 {
+            min-width: 350px;
+
+            img {
+                border-radius: rem(25);
+                overflow: hidden;
+            }
+
+            @include xl {
+                min-width: 0;
+            }
+        }
+
+        &__2 {
+            min-width: 350px;
+            transform: translateX(-50%);
+            padding-top: 25%;
+
+            img {
+                border-radius: rem(25);
+                overflow: hidden;
+            }
+
+            @include xl {
+                min-width: 0;
+            }
+        }
+    }
+
+    .sections-content {
+        padding: rem(65) 0;
+
+        @include xl {
+            padding: rem(40) 0;
+        }
+    }
+}

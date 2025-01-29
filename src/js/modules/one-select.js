@@ -2,13 +2,13 @@ export class OneSelect {
 
     constructor(element, options = {}) {
         let defaults = {
-            placeholder: 'Выбирайте фруктики !',
-            searchText: 'Поиск...',
+            placeholder: 'Локация для тура',
+            searchText: 'Найти...',
             search: true,
             closeListOnItemSelect: false,
             edge: 0,
             numberCells: 7,                                 // количество выпадающих пунктов
-            selectInDOM: true,
+            selectInDOM: false,
             name: '',
             width: '',
             height: '',
@@ -18,6 +18,10 @@ export class OneSelect {
             onSelect: function () { },
             onUnselect: function () { }
         };
+        this.decriptions = document.querySelectorAll('.inputs-description')        
+        this.localText = this.decriptions[0].innerHTML
+        this.dateText = this.decriptions[1].innerHTML
+        this.humansText = this.decriptions[2].innerHTML    
 
         this.wl_searchPlaceholder = options.searchText
 
@@ -69,7 +73,9 @@ export class OneSelect {
             }
         })
     }
+
     _openHeightSelect() {
+
         if (this.options.search) { var searchElement = this.element.querySelector('div.one-select-search-wrap') }
         var cellHeight
         var cellElement = this.element.querySelector('div.one-select-option')
@@ -79,37 +85,32 @@ export class OneSelect {
         this.memoryCellHeight ? cellHeight = this.memoryCellHeight : cellHeight = cellElement.scrollHeight
         var optionsOnlyHeight = this.options.numberCells * cellHeight
 
-        // console.log('Высота поиска - ', searchElement.scrollHeight,
-        //     ' Высота ячейки -  ', cellElement.scrollHeight,
-        //     ' Высота Оптионс  - ', optionsOnlyHeight);
-
         let paddingDropdownTop = parseInt(getComputedStyle(optionsAllElement, null).paddingTop)
         let paddingDropdownBottom = parseInt(getComputedStyle(optionsAllElement, null).paddingBottom)
         if (this.options.search) { var searchElementHeight = searchElement.scrollHeight } else { var searchElementHeight = 0 }
         optionsAllElement.style.height = optionsOnlyHeight + searchElementHeight + paddingDropdownTop + paddingDropdownBottom + 'px';
-        optionsOnlyElement.style.height = optionsOnlyHeight + 'px'
+        optionsAllElement.classList.add('options-open');
 
+        optionsOnlyElement.style.height = optionsOnlyHeight + 'px'
         this.element.querySelectorAll('.one-select-option').forEach(el => {
             el.classList.remove('key-item-current')
         })
     }
-    _consoleFormOptions(){
-         // -------------- ВЫВОДИМ ВЫБРАННЫЕ ОПЦИИ ИЗ ОБЪЕКТА FormData ------------      
-         var currentElement
-         if (this.element.querySelector('.one-select-search')) { currentElement = this.element.querySelector('.one-select-search') }
-         if (this.element.querySelector('[name="doll"]')) { currentElement = this.element.querySelector('[name="doll"]') }
-         if (this.selectInDOM) { currentElement = this.selectElement }
-         console.log('Набор кастомного Cелекта - ', new FormData(currentElement.form).getAll(this.name));    
+    _consoleFormOptions() {
+        // -------------- ВЫВОДИМ ВЫБРАННЫЕ ОПЦИИ ИЗ ОБЪЕКТА FormData ------------      
+        var currentElement
+        if (this.element.querySelector('.one-select-search')) { currentElement = this.element.querySelector('.one-select-search') }
+        if (this.element.querySelector('[name="doll"]')) { currentElement = this.element.querySelector('[name="doll"]') }
+        if (this.selectInDOM) { currentElement = this.selectElement }
+        console.log('Набор кастомного Cелекта - ', new FormData(currentElement.form).getAll(this.name));
     }
-
     _closeHeightSelect() {
         var optionsAllElement = this.element.querySelector('div.one-select-options')
-        optionsAllElement.style.height = 0;  
-        // this._consoleFormOptions()     
+        optionsAllElement.classList.remove('options-open');
     }
 
     _scrollDown(optionItem, counter, optionAmount) {
-        let scrollWindow = document.querySelector('.one-select-options-only')
+        let scrollWindow = this.element.querySelector('.one-select-options-only')
         let scrollWindowHeight = scrollWindow.scrollHeight
         let clientWindowHeight = scrollWindow.clientHeight
         let elementHeight = optionItem.offsetHeight
@@ -130,7 +131,7 @@ export class OneSelect {
     }
 
     _scrollUp(optionItem, counter, optionAmount) {
-        let scrollWindow = document.querySelector('.one-select-options-only')
+        let scrollWindow = this.element.querySelector('.one-select-options-only')
         let scrollWindowHeight = scrollWindow.scrollHeight
         let clientWindowHeight = scrollWindow.clientHeight
         let elementHeight = optionItem.offsetHeight
@@ -160,17 +161,19 @@ export class OneSelect {
         }
         let template = `
             <div class="one-select ${this.name}"${this.selectElement.id ? ' id="' + this.selectElement.id + '"' : ''} style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}">
-                ${this.selectedValues.map(value => `<input type="hidden" name="${this.name}" value="${value}">`).join('')}
+                ${this.selectedValues.map(value => `<input hidden name="${this.name}" value="${value}">`).join('')}
                 <div class="one-select-header" style="${this.width ? 'width:' + this.width + ';' : ''}${this.height ? 'height:' + this.height + ';' : ''}">
                 <span class="one-select-header-placeholder">${this.placeholder}</span>                
                   
                 </div>
                 <div class="one-select-options" style="${this.options.dropdownWidth ? 'width:' + this.options.dropdownWidth + ';' : ''}">
                     ${this.options.search === true || this.options.search === 'true' ? `<div class='one-select-search-wrap'><input type="text" class="one-select-search" autocomplete = "off" placeholder=${this.wl_searchPlaceholder} name='search-${this.name}'></div>` : ''}
-                      <div class="one-select-options-only">
-                    ${optionsHTML}
-                     </div>
+                                 
+                    <div class="one-select-options-only">
+                    ${optionsHTML}                    
+                     </div>                             
                 </div>
+              
             </div>
         `;
         let element = document.createElement('div');
@@ -179,9 +182,50 @@ export class OneSelect {
         return element;
     }
 
+    // ----------------- Проверка значений полей в форме и визуализация результата на кнопке --------------------------------------------
+    _checkSubmitProgram() {
+        const checkButton = document.querySelector('#submitProgram')
+        // ------------ проверка для кнопки и описаний для полей ----------
+              
+        let inputLoc = document.querySelector('input[name="tourLocation"]')
+        let valuePick = document.querySelector('#datePicker').value
+        let inputHum = document.querySelector('input[name="tourHumans"]')
+               
+        if (inputLoc) { 
+            this.decriptions[0].classList.add('green-accent')
+            this.decriptions[0].innerHTML = 'Отлично !'
+        } else { 
+            this.decriptions[0].classList.remove('green-accent') 
+            this.decriptions[0].innerHTML = this.localText
+        }
+        if (valuePick) { 
+            this.decriptions[1].classList.add('green-accent')
+            this.decriptions[1].innerHTML = 'Отлично !'
+        } else { 
+            this.decriptions[1].classList.remove('green-accent') 
+            this.decriptions[1].innerHTML = this.dateText
+        }
+        if (inputHum) {
+            this.decriptions[2].classList.add('green-accent')
+            this.decriptions[2].innerHTML = 'Отлично !'
+        } else { 
+            this.decriptions[2].classList.remove('green-accent') 
+            this.decriptions[2].innerHTML = this.humansText
+        }
+        
+        if (valuePick && inputLoc && inputHum) {
+            checkButton.classList.add('access');
+            checkButton.innerHTML = '<span>Отправить !</span>';
+        } else {
+            if (checkButton.classList.contains('access')) { checkButton.classList.remove('access'); }
+            checkButton.innerHTML = ' <span>Найти программу</span>';
+        }
+    }
+
+    // ----------------------- Отслеживание нажатия клавиш привыборе пункта и другое ----------- --------------------------------------------
     _eventHandlers() {
         // ---------------------------- КЛАВА ----------------------------------
-        if (this.options.selectInDOM) this.selectElement.querySelectorAll('option')[0].setAttribute('selected', '')
+        // if (this.options.selectInDOM) this.selectElement.querySelectorAll('option')[0].setAttribute('selected', '')
         if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none'; el.removeAttribute('type') }) }
 
         let counter = 15
@@ -235,15 +279,27 @@ export class OneSelect {
             }
         })
 
-        // ---------------------------- Мышка ----------------------------------
+        // ---------------------------------------------- Мышка -----------------------------------------------------------------------
         let headerElement = this.element.querySelector('.one-select-header');
         this.related = this.element.querySelector('.one-select-options').querySelector('.one-select-selected')
+
+
+
+        // ---------------------- обнудляем первый элемент в селекте -----------------
+        let option = this.element.querySelectorAll('.one-select-option')[0]
+        option.classList.remove('one-select-selected');
+        this.element.querySelectorAll('.one-select-header-option').forEach(headerOption => headerOption.dataset.value == option.dataset.value ? headerOption.remove() : '');
+        this.element.querySelector(`input[value="${option.dataset.value}"]`).remove();
+        this.data.filter(data => data.value == option.dataset.value)[0].selected = false;
+        let selected = false;
+        headerElement.insertAdjacentHTML('afterbegin', `<span class="one-select-header-placeholder">${this.placeholder}</span>`);
+        // ---------------------------------------------------------------------------
+
         this.element.querySelectorAll('.one-select-option').forEach(option => {
             option.onclick = () => {
 
                 this.options.selectInDOM ? this._updateSelectElement(option) : ''
                 this.doll ? this.doll.focus() : this.searching.focus();
-                let selected = true;
 
                 if (!option.classList.contains('one-select-selected')) {
                     if (this.options.max && this.selectedValues.length >= 1) {
@@ -266,7 +322,7 @@ export class OneSelect {
                             headerElement.insertAdjacentHTML('afterbegin', `<span class="one-select-header-option" data-value="${option.dataset.value}">${option.querySelector('.one-select-option-text').innerHTML}</span>`);
                         }
 
-                        this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
+                        this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input hidden name="${this.name}" value="${option.dataset.value}">`);
                         this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
                         if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none'; el.removeAttribute('type') }) }
 
@@ -282,7 +338,7 @@ export class OneSelect {
                         headerElement.insertAdjacentHTML('afterbegin', `<span class="one-select-header-option" data-value="${option.dataset.value}">${option.querySelector('.one-select-option-text').innerHTML}</span>`);
                     }
 
-                    this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input type="hidden" name="${this.name}" value="${option.dataset.value}">`);
+                    this.element.querySelector('.one-select').insertAdjacentHTML('afterbegin', `<input hidden name="${this.name}" value="${option.dataset.value}">`);
                     this.data.filter(data => data.value == option.dataset.value)[0].selected = true;
                     if (this.options.selectInDOM) { this.element.querySelectorAll(`input[name="${this.name}"]`).forEach(el => { el.disabled = 'true'; el.style.display = 'none'; el.removeAttribute('type') }) }
 
@@ -313,17 +369,30 @@ export class OneSelect {
                 } else {
                     this.options.onUnselect(option.dataset.value, option.querySelector('.one-select-option-text').innerHTML, option);
                 }
+                this._checkSubmitProgram();
             };
+
         });
 
         // ----------------------------- Клик по каретке ОТКРЫТЬ\ЗАКРЫТЬ Мультиселект --------------------------------------
-        headerElement.onclick = () => {
+        headerElement.onclick = (e) => {
+            // ---------------- Закрываем все открытые селекты ---------------
+            let allWindows = document.querySelectorAll('.one-select-header');
+            allWindows.forEach(el => {
+                if (el !== e.target) {
+                    let t = el.parentNode;
+                    let oo = t.querySelector('.one-select-options')
+                    oo.classList.remove('options-open');
+                    let ii = t.querySelector('.one-select-header')
+                    ii.classList.remove('one-select-header-active');
+                }
+            });
+
             headerElement.classList.toggle('one-select-header-active')
             if (headerElement.classList.contains('one-select-header-active')) {
                 this._openHeightSelect()
                 counter = 15
                 setTimeout(() => { this.doll ? this.doll.focus() : this.searching.focus() }, 400)
-
 
             } else {
                 this._closeHeightSelect()
@@ -361,7 +430,7 @@ export class OneSelect {
                 }
             };
         }
-        document.addEventListener('click', event => {
+        document.addEventListener('click', (event) => {
             if (!event.target.closest('.' + this.name) && !event.target.closest('label[for="' + this.selectElement.id + '"]')) {
                 headerElement.classList.remove('one-select-header-active');
                 this._closeHeightSelect()

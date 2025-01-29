@@ -1,7 +1,6 @@
-.header {
-	// display: none;
+.header {	
 	background-color: var(--color-bg-header);
-	padding: 2rem 0;
+	width: 100%;
 
 	&-row {
 		display: flex;
@@ -12,7 +11,7 @@
 
 .header-nav {
 	
-	@include tablet {
+	@include xl {
 		display: none;
 	}
 }

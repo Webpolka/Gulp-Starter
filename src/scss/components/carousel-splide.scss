@@ -288,7 +288,7 @@
     align-items: center;
     background: #ccc;
     border: 0;
-    border-radius: 50%;
+    border-radius: 20px;
     cursor: pointer;
     display: -ms-flexbox;
     display: flex;
@@ -300,14 +300,14 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-    height: var(--arrowSize);
-    width: var(--arrowSize)  ;
+    height: calc(var(--arrowSize) * 4);
+    width: calc(var(--arrowSize) / 1.4) ;
 }
 
 .splide__arrow svg {
     fill: #000;
     height: 2em;
-    width: 2em
+    width: 1.2em
 }
 
 .splide__arrow:hover:not(:disabled) {
@@ -325,7 +325,10 @@
 
 // -------------------------------------- здесь можно задать смешение влево вправо для стрелок ---------------------------------------------
 .splide__arrow--prev {
-    left: 1em
+    left: -5em;
+    @include xxl{
+        left: -2.5em;
+    }
 }
 
 .splide__arrow--prev svg {
@@ -333,7 +336,10 @@
 }
 
 .splide__arrow--next {
-    right: 1em
+    right: -5em;
+    @include xxl{
+        right: -2.5em;
+    }
 }
 
 .splide.is-focus-in .splide__arrow:focus {

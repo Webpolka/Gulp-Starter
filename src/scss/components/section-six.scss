@@ -1,0 +1,22 @@
+.section-six{
+    padding: rem(80) 0 rem(100);
+
+    @include xl {
+        padding: rem(50) 0 rem(60);
+    }
+
+
+    .masonry{
+        .masonry-cell{          
+            overflow: hidden;         
+            border-radius: rem(20);           
+        }        
+    }
+    .btn-main {
+        margin-top: rem(50);
+
+        @include xl {
+            margin-top: rem(30);
+        }
+    }
+}

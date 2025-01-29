@@ -1,39 +1,32 @@
-// ширина контейнера из макета
-$container-width: 1200;
-// отступы безопасности для контейнера
-$main-offset: 15;
-// максимальная ширина страницы
-$max-width: 1920;
-// минимальная ширина телефона
-$min-width: 320;
-// ширина контейнера с учетом padding слева и справа
-$max-width-container: $container-width + ($main-offset * 2);
-// $max-width-container: $container-width ;
-// $header-height: 100;
-// $footer-height: 100;
 
+// ----------------------------------- ОСНОВНЫЕ КОРНЕВЫЕ ПЕРЕМЕННЫЕ ----------------------------
+
+// ---------- Проследите чтоб занчения 2-х первых переменных в root:  совпадали с переменными $ внизу ! ---
 :root {
-	--container-width: 1200px;
-	--container-padding: 15px;
+	// -удалите класс .container в utils.scss если не хотите для него жосткой ширины, а хотите пойти по правилам Bootstrap
+	// --container-width: 1200px;
+	--container-padding: 2rem;
+	--bs-gutter-x: var(--container-padding);  // --- гутеры для Bootstrap ---
 
 	// ------------ Fonts Vars -------------
-	--font-main: "Inter", sans-serif;
+	--font-main: "NunitoSans", sans-serif;
 	--font-main-size: 16px;
 	--font-main-weight: 400;
-	--font-accent: 'Manrope', sans-serif;
-	--font-titles: var(--font-accent);
+	--font-accent: 'NextArt', sans-serif;
+	--font-titles: "NunitoSans", sans-serif;
 
 	// ------------ Colors Vars -------------
-	--color-white: #fff;
+	--color-white: rgb(253, 253, 253);
 	--color-black: #131313;	
-	--color-link: #114f89;
+	--color-link: rgb(17, 79, 137);
 	--color-link-hover: rgb(112, 72, 206);
-	--color-btn:  #893d11;
-	--color-btn-hover:  #aa6a48;
+	--color-btn: rgb(26, 62, 62);
+	--color-btn-hover: rgb(62, 143, 143);
+	--color-border: rgb(255,255,255,0.35);
 
 	// ----------------- Header and footer -----------
-	--color-bg-header: rgb(221, 187, 215);
-	--color-bg-footer: rgb(165, 51, 138) ;
+	--color-bg-header: transparent;
+	--color-bg-footer:rgb(26, 62, 62) ;
 
 	--transition: 0.3s ease-in-out;
 	--radius: rem(4);
@@ -42,21 +35,30 @@ $max-width-container: $container-width + ($main-offset * 2);
 	--shadow-hover: 0 0 5px 0 #{rgba(#000, 10%)},
 	0 0 10px 0 #{rgba(#000, 10%)},
 	0 0 15px 0 #{rgba(#000, 10%)};
-
 }
 
 
 // ----------- Mode Switcher -------------
 .light-mode {
-	--color-title: rgba(0, 0, 0, .9);
-	--color-main: #242323;	
-	--color-page-bg: rgb(255, 255, 255);
-	--color-post-bg: rgb(251, 249, 249);
+	--color-title:rgb(24, 18, 30);
+	--color-main: rgb(24, 18, 30);	
+	--color-accent: rgb(242, 190, 34);
+	// --color-page-bg: rgb(255, 255, 255);
+	// --color-post-bg: rgb(251, 249, 249);
 }
 
 .dark-mode {
 	--color-title: rgba(255, 255, 255);
-	--color-main: #b4a9a9;	
-	--color-page-bg: rgb(0, 0, 0, 0.9);
-	--color-post-bg: rgb(52, 51, 51);
+	--color-main: rgba(255, 255, 255);	
+	// --color-page-bg: rgb(0, 0, 0, 0.9);
+	// --color-post-bg: rgb(52, 51, 51);
 }
+
+
+// ---------$$$$$$$$$$$$$$$$ Нужно для функции Adaptive Clamp $$$$$$$$$$$$$---------------
+$container-width: 1200;
+$main-offset: 15;
+
+$max-width: 1920;
+$min-width: 320;
+$max-width-container: $container-width + ($main-offset * 2);

@@ -154,14 +154,40 @@
     }
 }
 
-@mixin tablet () {
-    @media (max-width: 1220px) {
+@mixin xs () {
+    @media (max-width: 320px) {
 		@content;
 	}
 }
 
-@mixin mobile () {
-    @media (max-width: 820px) {
+// -------------------------- Bootstrap mixins ---------------------------
+@mixin xs () {
+    @media (max-width: 320px) {
+		@content;
+	}
+}
+@mixin sm () {
+    @media (max-width: 576px) {
+		@content;
+	}
+}
+@mixin md () {
+    @media (max-width: 768px) {
+		@content;
+	}
+}
+@mixin lg () {
+    @media (max-width: 992px) {
+		@content;
+	}
+}
+@mixin xl () {
+    @media (max-width: 1200px) {
+		@content;
+	}
+}
+@mixin xxl () {
+    @media (max-width: 1400px) {
 		@content;
 	}
 }

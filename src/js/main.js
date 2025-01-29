@@ -1,251 +1,302 @@
-/**
- * !(i)
- * Код попадает в итоговый файл, только когда вызвана функция, например FLSFunctions.spollers();
- * Или когда импортирован весь файл, например import "files/script.js";
- * Неиспользуемый код в итоговый файл не попадает.
-
- * Если мы хотим добавить модуль следует его раскомментировать
- */
-// import { MousePRLX } from './libs/parallaxMouse'
-// import AOS from 'aos'
-// import Swiper, { Navigation, Pagination } from 'swiper';
-
-
-// import { PopupManager } from './modules/popup-manager';
-// import { Tabs } from './modules/tabs';
-
-
-// import rangeSlider from './modules/range-slider.js';
-
 // ----------------------------------------------------- Базовые скрипты --------------------------------------------------------
 import { BaseHelpers } from './helpers/base-helpers';
 BaseHelpers.addLoadedClass();
-
 BaseHelpers.checkWebpSupport();
 BaseHelpers.calcScrollbarWidth();
 BaseHelpers.addTouchClass();
 BaseHelpers.headerFixed();
 
-// ----------------------------------------------------- Ленивая загрузка --------------------------------------------------------
-import loadingPage from './modules/loading-page.js';
-loadingPage()
-
-// ----------------------------------------------------- Рейтинг звезды  ---------------------------------------------------------
-import ratingStars from './modules/rating-stars.js'
-ratingStars(1, 'Ваша оценка', '<i class="fa-solid fa-star"></i>')
-
-// ----------------------------------------------------- Слайдер -----------------------------------------------------------------
-// import carouselSplideInit from './modules/carousel-splide.js';
-// carouselSplideInit()
-
-// let slider = '.splide'
-// let splideIs = document.querySelector(slider)
-// if (splideIs) {
-//   new Splide(slider, {
-//     type: 'loop',       // (slide, loop, fade) - соответственно (незацикленное, зацикленное, замена путем fade эффекта)
-//     direction: 'ltr',   // направление карусели (ltr, rtl, ttb) соответсвенно (слева на право, справа на лево, сверху вниз)
-//     drag: true,          // разрешать перетаскивать слайдер
-//     autoplay: true,      // включить авто перелистывание
-//     interval: 2000,      // интервал автоматического перелистывания слайдов в м\сек
-//     pauseOnHover: true,  // остановить автоматическое перелистывание при наведении курсора мыши
-
-//     perMove: 1,          // количество перемещаемых слайдов за раз
-//     perPage: 1,          // Количество слайдов 
-//     gap: '1rem', // зазор между слайдами
-
-//     height: '100%',     // высота карусели
-//     padding: {           // (left, right) - для горизонтальной карусели (top, bottom - для вертикальной карусели)
-//       left: 0,
-//       right: 0
-//     },
-
-//     arrows: true,        // отображать стрелки
-//     heightRatio: 0.2,   // кэф высоты стрелок
-
-//     pagination: true,   // отображать пагинацию
-
-//     speed: 5000,         // скорость перелистывания в м\сек
-//     rewindSpeed: 5000,   // скорость перемотки слайдов
-
-//     rewind: true,   // позволяет вообще перемотку слайдов
-//     rewindByDrag: true,  // позволяет делать перемотку слайдов перетаскиванием мыши
-//   }).mount();
-// }
-
-// ----------------------------------------------------- Аккордион -----------------------------------------------------------------
-import { Accordion } from './modules/accordion.js';
-new Accordion('.accordion', {
-  shouldOpenAll: false, // true
-  defaultOpen: [], // [0,1]
-  collapsedClass: 'open',
-});
-
-// ---------------------------------------- Переключатель темы СВЕТ.\ТЕМН. ---------------------------------------------------------
-import modeSwitcher from './modules/mode-switcher.js';
-const modeOptions = {
-  btnClass: 'inline',
-  lightClass: 'light-mode',
-  lightTextClass: 'light-color--text',
-  darkClass: 'dark-mode',
-  darkTextClass: 'dark-color--text',
-  darkIcon: '<i class="fa-regular fa-moon"></i>',
-  darkText: '<span>Тёмная</span>',
-  lightIcon: '<i class="fa-regular fa-sun"></i>',
-  lightText: '<span>Светлая</span>',
-}
-modeSwitcher(modeOptions);
-
-// ---------------------------------------- Подключаем MULTI SELECT -----------------------------------------
-import { MultiSelect } from './modules/multi-select.js'
-
-// --- Подключаем все имеющиеся на странице множественные селекты с аттрибутом [data-multi-select] -----------
-// document.querySelectorAll('[data-multi-select]').forEach(select => new MultiSelect(select));
+// ----------------------------------------------------- Menu Header --------------------------------------------------------
+import textPopup from './modules/text-popup.js';
+textPopup()
+// доступ через классы : 
+// #popup #popupClose - для кликов, 
+// .popup--show - для отображения
+// .popup-title .popup-content - для вставки HTML
 
 
-
-let multiSelect = document.querySelector('[data-multi-select]')
-new MultiSelect(multiSelect, {
-  placeholder: 'Выбирайте что нибудь',         // плейсхолдер селекта
-  selectAllText: 'Выбрать все !',              // текст для пункта ВЫБРАТЬ ВСЕ
-  howMuchText: "выбрано !",                    // текст для варианта listAll = false показ количества выбранных елементов числом
-  searchText: 'Поиск...',                      // плейсхолдер формы ПОИСКА
-  showCounter: false,                           // показывать ли счетчик выбранных пунктов 
-  max: 5,                                      // количество выбираемых пунктов
-  search: true,                                // показывать форму ПОИСКА
-  selectAll: true,                             // показывать пункт ВЫБРАТЬ ВСЕ   
-  listAll: true,                               // true - перечислять все элементы, false - количество числом
-  closeListOnItemSelect: false,                 // закрывать ли после выбора
-  edge: 0,                                     // сдвиг для стрелочек вверх вних
-  numberCells: 7,                              // количество выпадающих пунктов
-  selectInDOM: false,                              // если true то остаеться select, если false то только inputs в div
-  name: 'name1',                                    // добавить атрибут 
-  width: '',                                   // онлайн стили ширина
-  height: '',                                  // онлайн стили высота родителя
-  dropdownWidth: '',                           // онлайн стили ширина выпадающего списка
-  dropdownHeight: '',                          // высота выпадающего выставляеться в файле стилей, здесь не работает
+// ----------------------------------------------------- Menu Header --------------------------------------------------------
+import headerNav from './modules/header-nav.js';
+headerNav({
+  maxH: 90,
+  logoMaxH: 72,
 })
 
+import { HoverIntentToggleClass } from './myJsClasses/hover-intent-class.js'
+if (document.querySelector('#headerNavigation') && (document.querySelectorAll('.menu>li').length > 1)) {
+  new HoverIntentToggleClass(
+    '#headerNavigation',           //  родительский контейнер
+    '.menu>li',                    //  отслеживаемые елементы в родительском контейнере
+    50,                     //  интервал - задержка при наведении курсора
+    600,                     //  тайм-аут это задержка при покинутом елементе
+  ).init()
+}
 
-// ---------------------------------------- Подключаем ONCE SELECT -----------------------------------------
+// ---------------------------------------------- Датапикер ---------------------------------------------------------
+import AirDatepicker from 'air-datepicker';
+import checkProgram from './modules/check-program.js';
+import forDatePicker from './modules/for-datepicker.js';
 
+let decriptions = document.querySelectorAll('.inputs-description')
+let localText = decriptions[0].innerHTML
+let dateText = decriptions[1].innerHTML
+let humansText = decriptions[2].innerHTML
+forDatePicker();
+
+const datapicker = document.querySelector('#datePicker')
+if (datapicker) {
+  new AirDatepicker('#datePicker', {
+    autoClose: true,
+    range: true,
+    multipleDates: 2,
+    multipleDatesSeparator: ' - ',
+    buttons: ['today', 'clear'],
+    onSelect({ date, formattedDate, datepicker }) {
+      checkProgram(decriptions, localText, dateText, humansText);
+    }
+  });
+}
+// ------------------------------------------- ONE SELECT  ----------------------------------------------------------
 import { OneSelect } from './modules/one-select.js'
 
-let oneSelect = document.querySelector('[data-one-select]')
-new OneSelect(oneSelect, {
-  placeholder: 'Выбирайте один любой фрукт !',    // плейсхолдер селекта
-  searchText: 'Поиск...',                         // плейсхолдер формы ПОИСКА
+document.querySelectorAll('[data-one-select]').forEach(select => new OneSelect(select, {
+  placeholder: 'Выбирайте локацию для тура!',    // плейсхолдер селекта
+  searchText: 'Найти локацию...',                         // плейсхолдер формы ПОИСКА
   search: true,                                   // показывать форму ПОИСКА
-  closeListOnItemSelect: true,                    // закрывать ли после выбора
+  closeListOnItemSelect: true,                   // закрывать ли после выбора
   edge: 0,                                        // сдвиг для стрелок вверх вниз
-  numberCells: 5,                                 // количество выпадающих пунктов
-  selectInDOM: true,                              // если true то остаеться select, если false то только inputs в div
-  name: 'name2',                                  // добавить атрибут 
+  name: '',                                       // добавить атрибут 
   width: '',                                      // онлайн стили ширина
   height: '',                                     // онлайн стили высота родителя
   dropdownWidth: '',                              // онлайн стили ширина выпадающего списка                                                 
 })
+);
+// --------------------------------------- INPUT BLOCKS SCROLL UP AND VALIDATE AJAX--------------------------------------------
+let allOnesSelects = document.querySelector('.inputs-block').querySelectorAll('.one-select-header')
+let allInputs = document.querySelector('.inputs-block').querySelectorAll('.input-count')
+allOnesSelects.forEach(el => {
+  el.addEventListener('click', (e) => {
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.pageYOffset - 75,
+      behavior: "smooth"
+    })
 
+    e.stopPropagation();
+  })
+})
+allInputs.forEach(el => {
+  el.addEventListener('click', (e) => {
+    let allWindows = document.querySelectorAll('.one-select-header');
+    allWindows.forEach(el => {
+      let t = el.parentNode;
+      let oo = t.querySelector('.one-select-options')
+      oo.classList.remove('options-open');
+      let ii = t.querySelector('.one-select-header')
+      ii.classList.remove('one-select-header-active');
+    });
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.pageYOffset - 75,
+      behavior: "smooth"
+    });
+    e.stopPropagation();
+  })
+})
+// ------------------------------------------- WL-POPUP -----------------------------------------------------------------------
+import { WLPopUp } from './myJsClasses/wl-popup.js'
+new WLPopUp({
+  id: 'parent',                 // -- обязательно указывать (нужно для создания модального окна и должен совпадать с аттрибутом родителя--)
+  parent: false,                 // -- true чтобы сгруппировать галлерейки по родителю, если false то все popup-item="child" в одном списке  
+  item: 'child',                // -- аттрибут для дочерних эллементов 
+  overlay: '' // -- кнопка для открытия popup (появл. при наведении курсора)
+}).init()
 
+// --------------------------------------------- masonry RESPONSIVE ----------------------------------
+import { MasonryResponsive } from './myJsClasses/masonry-responsive.js'
+new MasonryResponsive({
+  delay: 200,  // Resize delay
+  element: '.masonry-cell', // для цикла чтоб перебрать все элементы и поменять высоту  
+  accentClass: 'accent'   // Берем контейнер по высоте ибзоражения внутри которого будем ровняться 
+})
 
-// import { HoverIntentAddClass } from './myJsClasses/hover-intent-class.js'
-// let newHover = new HoverIntentAddClass(
-//   '#breadcrumb',           //  родительский контейнер
-//   'li',                    //  отслеживаемые елементы в родительском контейнере
-//   100,                     //  интервал - задержка при наведении курсора
-//   500,                     //  тайм-аут это задержка при покинутом елементе
-//   doOver,                  //  callBack функция при наведении
-//   {age:30, bool:true, name:'kuzya'},     //  аргумент к функции при наведении
-//   doLeave,                 //  callBack функция при выходе
-//   '2'                      //  аргумент к функции при выходе
-// )
-// newHover.init()
+// --------------------------------------------- Buttons Listener ----------------------------------
+import buttonsListener from './modules/buttons-listener.js'
+buttonsListener()
 
-// // если нужно передать несколько аргументов к функции, передаем объектом или массивом
-// function doOver(arg) {
-//   console.log('Over 1 -', arg.age);
-//   console.log('Over 2 -', arg.bool);
-//   console.log('Over 3 -', arg.name);
-// }
-// function doLeave(arg) {
-//   console.log('Leave -', arg);
-// }
+import carouselSplideInit from './modules/carousel-splide.js';
+carouselSplideInit()
+new Splide('#popular', {
+  type: 'slide',       // (slide, loop, fade) - соответственно (незацикленное, зацикленное, замена путем fade эффекта)
+  direction: 'ltr',   // направление карусели (ltr, rtl, ttb) соответсвенно (слева на право, справа на лево, сверху вниз)
+  drag: false,          // разрешать перетаскивать слайдер
+  autoplay: true,      // включить авто перелистывание
+  interval: 10000,      // интервал автоматического перелистывания слайдов в м\сек
+  pauseOnHover: true,  // остановить автоматическое перелистывание при наведении курсора мыши
 
+  perMove: 1,          // количество перемещаемых слайдов за раз
+  perPage: 3,          // Количество слайдов 
+  gap: '2rem', // зазор между слайдами
 
+  height: '100%',     // высота карусели
+  padding: {
+    left: 0,
+    right: 0
+  }, 
+  heightRatio: 0.2,   // кэф высоты стрелок
 
-// --------------- Меню Верхнего колинтула сайта и мобильное меню ------------------
+  pagination: false,   // отображать пагинацию
 
-import headerMenu from './modules/header-menu.js';
-const optionsMenu = {
-  burgerPosition: 'left',           // кнопка бургер справа
-  direction: 'horizontal',           // напрвление меню
-  method: 'opacity',                 // opacity, display
-  methodHeaderSpeed: 300,            // скорость метода для главного меню
-  methodMobileSpeed: 800,            // скорость метода для мобильного меню
-  slideFunction: 'linear',           // функция метода для slidedown
-  addButtonOpenAll: true,            // добавить кнопку открыть все class = 'mobileAllBtn'
-  addButtonOpenHtml: '<i class="fa-solid fa-chevron-down"></i> Открыть все !',       // html для вставки в кнопку Открыть
-  addButtonCloseHtml: '<i class="fa-solid fa-chevron-up"></i> Закрыть все !',   // html для вставки в кнопку Закрыть
-  mobileAllOpened: false,            // сразу открытые все пункты мобильного меню и реагируют только родительские
-  openHoverChildren: true,          // открывать ли потомков при ховере или нет
-  closeChildren: true,               // закрывать всех потомков ниже или нет
-  closeRootMobile: true,             // закрывать за собой дочерние пункты меню или нет
-  closeHoverChildren: true,          // закрывать дочерние главного меню после ховера или нет
-  openHoverDelay: 100,               // задержка до появления пункта меню при ховере
-  closeHoverRootDelay: 500,          // основная задержка для главного меню
-  closeHoverChildrenDelay: 1000,      // задержка после ховера только дочерних пунктов
-  addHeaderArrows: true,             // добавлять ли стрелочки или нет для главного меню
-  addMobileArrows: true,             // добавлять ли стрелочки или нет для мобильного меню
-  mobileArrowIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>',
-  headerArrowIcon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>',
+  speed: 8000,         // скорость перелистывания в м\сек
+  rewindSpeed: 5000,   // скорость перемотки слайдов
+
+  rewind: true,   // позволяет вообще перемотку слайдов
+  rewindByDrag: true,  // позволяет делать перемотку слайдов перетаскиванием мыши
+
+  breakpoints: {       // адаптивные опции  
+    768: {
+      perPage: 1,     
+    },
+    
+    992: {
+      perPage: 2,
+    },
+    1200: {
+      perPage: 3,        
+    }
+  }
+}).mount();
+
+// ----------------------------------------------------- ChangeAble Carousel --------------------------------------------------
+let carousel
+let removeSliderClasses = {
+  rowClass: 'row',
+  additionalRowClasses: ['g-4','reveal-row'],
+  colClass: 'col-xl-6',
+  additionalColClasses: ['reveal-item'],
 }
-headerMenu(optionsMenu);
+let createSliderClasses = {
+  rowClass: 'splide__list',
+  additionalRowClasses: [''],
+  colClass: 'splide__slide',
+  additionalColClasses: ['reveal-opacity'],
+}
 
-/**
- * Открытие/закрытие модальных окон
- * Чтобы модальное окно открывалось и закрывалось
- * На окно повешай атрибут data-popup="<название окна>"
- * На кнопку, которая вызывает окно повешай атрибут data-type="<название окна>"
+var x = window.matchMedia("(max-width: 1200px)")
+function myFunction(x) {
+  if (x.matches) {
+    createSplide('#commentSlider', removeSliderClasses, createSliderClasses)
+  } else {
+    removeSplide('#commentSlider', removeSliderClasses, createSliderClasses)
+  }
+}
+myFunction(x);
+x.addEventListener("change", function () {
+  myFunction(x);
+});
 
- * На обертку(.popup) окна добавь атрибут '[data-close-overlay]'
- * На кнопку для закрытия окна добавь класс '.button-close'
- * */
-// new PopupManager();
+function removeSplide(slider, remove, create) {
+  let thisSlider = document.querySelector(slider)
+  thisSlider.classList.remove('splide')
 
-/**
- *  Библиотека для анимаций
- *  документация: https://michalsnik.github.io/aos
- * */
-// AOS.init();
+  let ul = thisSlider.querySelector('ul')
+  if (ul) { ul.classList.replace(create.rowClass, remove.rowClass) }
+ 
+  remove.additionalRowClasses.forEach(rowC=>{
+    ul.classList.add(rowC)
+  })  
 
-/**
- * Параллакс мышей
- * */
-// new MousePRLX();
+  let lis = ul.querySelectorAll('li')
+  lis.forEach(li => {
+    li.className = ""
+    li.classList.add(remove.colClass)
+  
+    remove.additionalColClasses.forEach(colC=>{
+      li.classList.add(colC)
+    })  
+  }) 
+  if(carousel)carousel.destroy();
+}
 
-// new Tabs('tabs-example', {
-// 	onChange: (data) => {
-// 		console.log(data);
-// 	},
-// });
+function createSplide(slider, remove, create) {
+  let thisSlider = document.querySelector(slider)
+  thisSlider.classList.add('splide')
 
-//-------------------------------Range slider------------------------------------
-// rangeSlider();
+  let ul = thisSlider.querySelector('ul')
+  if (ul) { ul.classList.replace(remove.rowClass, create.rowClass) }
 
-//--------------------------инициализация ProductGallery ------------------------
-// import { productTabs } from './modules/product-gallery.js';
-// import productGallery from './modules/product-gallery.js';
-// // ---- здесь в связке работает Owl-carousel 2, magnific-popup и табы ! ---------
+  let lis = ul.querySelectorAll('li')
+  if (lis) {
+    lis.forEach(li => {
+      li.className = ""
+      li.classList.add(create.colClass)
+      create.additionalColClasses.forEach(colC=>{
+        li.classList.add(colC)
+      })  
+    })
+  }
+  carousel = new Splide('#commentSlider', {
+    type: 'loop',       // (slide, loop, fade) - соответственно (незацикленное, зацикленное, замена путем fade эффекта)
+    direction: 'ltr',   // направление карусели (ltr, rtl, ttb) соответсвенно (слева на право, справа на лево, сверху вниз)
+    drag: false,          // разрешать перетаскивать слайдер
+    autoplay: true,      // включить авто перелистывание
+    interval: 8000,      // интервал автоматического перелистывания слайдов в м\сек
+    pauseOnHover: true,  // остановить автоматическое перелистывание при наведении курсора мыши
 
-// productGallery();
-// new productTabs('product-tabs', {
-// 	onChange: (data) => {
-// 		console.log(data);
-// 	},
-// });
-//-------------------------------------------------------------------------------
+    perMove: 1,          // количество перемещаемых слайдов за раз
+    perPage: 1,          // Количество слайдов 
+    gap: '2rem', // зазор между слайдами
 
+    height: '100%',     // высота карусели
+    // padding: {
+    //   left: 0,
+    //   right: '75px'
+    // },
 
+    arrows: true,        // отображать стрелки
+    heightRatio: 0.2,   // кэф высоты стрелок
 
+    pagination: false,   // отображать пагинацию
 
+    speed: 5000,         // скорость перелистывания в м\сек
+    rewindSpeed: 5000,   // скорость перемотки слайдов
+
+    rewind: true,   // позволяет вообще перемотку слайдов
+    rewindByDrag: true,  // позволяет делать перемотку слайдов перетаскиванием мыши      
+  })
+  carousel.mount();
+}
+// ------------------------------------------ VIDEO POPUP -------------------------------------------------
+import {VideoPopup} from './myJsClasses/video-popup.js'
+new VideoPopup();
+
+// ------------------------------------------------- АНИМАЦИЯ ПРИ СКРОЛЛЕ ОТ ВЕБЛЕГКО --------------------------------------------------
+import { WLScrollAnimation } from './myJsClasses/wl-scroll-animation.js'
+// ---------- анимация при скролле одного родительского элемента(вколонке) и всех дочерних с нарастающей задержкой(вряду)------------------
+new WLScrollAnimation({
+  point: 0,                 // координаты по Y снизу на экране, когда начнет срабатывать скрипт(при скроле)
+  delay: 150,                  // нарастающая задержка для элементов вряду
+  parent: '.reveal-row',      // родительский элемент для организации цикла вряду
+  child: '.reveal-item',         // элементы к которым будет применена анимация
+  activeClass: 'active'       // активный класс для стилизации анимации
+}).init()
+new WLScrollAnimation({
+  point: 50,
+  child: '.reveal-col',
+  activeClass: 'active'
+}).init()
+new WLScrollAnimation({
+  point: 50,
+  child: '.reveal-left',
+  activeClass: 'active'
+}).init()
+new WLScrollAnimation({
+  point: 50,
+  child: '.reveal-right',
+  activeClass: 'active'
+}).init()
+new WLScrollAnimation({
+  point: 150,
+  child: '.reveal-opacity',
+  activeClass: 'active'
+}).init()
 
 

@@ -42,74 +42,71 @@
 	//
 	// ------------------------------------------------------- SCSS ----------------------------------------------------------------------
 
-	--caret-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-	--checkbox-icon: url(../../icons/star-pull.svg);
 	// -----------------------------------------------------  ОБЩИЕ НАСТРОЙКИ МУЛЬТИСЕЛЕКТА ------------------------------------------------------------
-	--font-size: 1rem; // общий размер шрифта 
-
-	--color-multi-main: #920a65; // цвет основной текста	
-	--color-placeholder: #d61010; // цвет placeholder верхней всегда открытой части мультиселекта
-	--color-option-text: inherit; // цвет неактивного текста нижних выпадающих пунктов 
-	--color-option-text-active: #aec940; // цвет активного текста нижних выпадающих пунктов
-	--color-search-placeholder: #c5400b; // цвет placeholder поля поиска в выпадающем меню  
+	 --font-size: 1rem; // общий размер шрифта 
+	
+	--color-placeholder: rgb(255,255,255,0.75); // цвет placeholder верхней всегда открытой части мультиселекта
+	--color-option-text: rgb(0,0,0,0.65); // цвет неактивного текста нижних выпадающих пунктов 
+	--color-option-text-active: var(--color-title); // цвет активного текста нижних выпадающих пунктов
+	--color-search-placeholder: rgb(0,0,0,0.25); // цвет placeholder поля поиска в выпадающем меню  
 	--hover-bg-color: rgb(0, 0, 0, 0.08); // цвет фона пункта при наведении курсора мыши
 	--keydown-bg-color: rgb(0, 0, 0, 0.2); // цвет фона пункта при управлении стрелочками
 
 	--color-scrollbar-track: white;
-	--color-scrollbar-thumb: #40c979;
-	--color-scrollbar-thumb-border-radius: 5px;
-	--color-scrollbar-thumb-active: var(--color-multi-main);
+	--color-scrollbar-thumb: var(--color-link);
+	--color-scrollbar-thumb-border-radius: 0;
+	--color-scrollbar-thumb-active: var(--color-main);
 
 
 	// ------------------------------------- ВЕРХНЯЯ ОСНОВНАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА КОТОРАЯ ВСТАВЛЯЕТЬСЯ В ВЕРСТКУ ---------------------------------------------
-	--top-header-padding-top: 0.3rem; // паддинг сверху верхней видимой части
-	--top-header-padding-bottom: 0.3rem; // паддинг снизу верхней видимой части
+	--top-header-padding-top: 1rem; // паддинг сверху верхней видимой части
+	--top-header-padding-bottom: 1rem; // паддинг снизу верхней видимой части
 	--top-header-padding-left: 1rem; // паддинг слева верхней видимой части
 	--top-header-padding-right: 1rem; // паддинг справа верхней видимой части
-	--top-header-border: 1px red solid; // бордер
-	--top-header-border-color-active: #c1c9d0; // цвет активного бордера
-	--top-header-border-radius: 0; // закругление бордера
+	--top-header-border: 1px rgb(253,253,253,0.75) solid; // бордер
+	--top-header-border-color-active: var(--top-header-border); // цвет активного бордера
+	--top-header-border-radius: 4px; // закругление бордера
 	--top-header-arrow-size: var(--font-size); // размер каретки 
 
 	// -----------ВЫБРАННЫЙ ПУНКТ КОТОРЫЙ ОТОБРАЖАЕТЬСЯ СВЕРХУ ------------
 	--top-header-option-bg: none; // цвет фона выбранных пуктов которые отображаються после выбора в верхней части
-	--top-header-option-padding-top: 0.3rem; // паддинг сверху
-	--top-header-option-padding-bottom: 0.3rem; // паддинг снизу
-	--top-header-option-padding-left: 1rem; // паддинг слева
-	--top-header-option-padding-right: 1rem; // паддинг справа
-	--top-header-option-border: 1px #40c979 solid; // бордер
-	--top-header-option-border-radius: 0.5rem; // закругление бордера
+	--top-header-option-padding-top: 0; // паддинг сверху
+	--top-header-option-padding-bottom: 0; // паддинг снизу
+	--top-header-option-padding-left: 0; // паддинг слева
+	--top-header-option-padding-right: 0; // паддинг справа
+	--top-header-option-border: 1px var(--color-link) solid; // бордер
+	--top-header-option-border-radius: 8px; // закругление бордера
 
 	// ---------------------------------------------------- НИЖНЯЯ ВЫПАДАЮЩАЯ ЧАСТЬ МУЛЬТИСЕЛЕКТА  ------------------------------------------------------------
-	--bottom-dropdown-bg: #c1c9d0; // фон выпадающего меню
-	--bottom-dropdown-margin-top: 0rem; // отступ сверху
-	--bottom-dropdown-padding: 0rem; // паддинг всего выпадающего мультиселекта
-	--bottom-dropdown-border-radius: 1rem; // закругление всего
-	--bottom-dropdown-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // затемнение
+	--bottom-dropdown-bg: rgb(253,253,253); // фон выпадающего меню
+	--bottom-dropdown-margin-top: 0.25rem; // отступ сверху
+	--bottom-dropdown-padding: 0 0 1.25rem 0; // паддинг всего выпадающего мультиселекта
+	--bottom-dropdown-border-radius:  4px; // закругление всего
+	--bottom-dropdown-box-shadow: 0px 0px 5px 5px rgba(78, 76, 210, 0.15); // затемнение
 
 	// ---------------- ПУНКТ НИЖНЕГО МУЛЬТИСЕЛЕКТА -----------------------
-	--bottom-option-padding-top: 1rem; // паддинг сверху
-	--bottom-option-padding-bottom: 1rem; // паддинг снизу
+	--bottom-option-padding-top: 0.4rem; // паддинг сверху
+	--bottom-option-padding-bottom: 0.4rem; // паддинг снизу
 	--bottom-option-padding-left: 1rem; // паддинг слева
 	--bottom-option-padding-right: 1rem; // паддинг справа
 	--bottom-option-border-radius: 0; // закругление бордера
 	--bottom-option-height: calc(var(--font-size) + var(--bottom-option-padding-top) + var(--bottom-option-padding-bottom + 2px)); // вычисляется автоматически
 
 	// ---------------- ПУНКТ ПОИСК НИЖНЕГО МУЛЬТИСЕЛЕКТА ----------------
-	--bottom-search-color-bg: #d3baba; // цвет фона формы поиска
-	--bottom-search-padding: 1rem; // паддинг общий
-	--bottom-search-border: 1px solid #9e2b05; // бордер
+	--bottom-search-color-bg: none; // цвет фона формы поиска
+	--bottom-search-padding: 0.5rem 1rem; // паддинг общий
+	--bottom-search-border: 1px solid rgb(0,0,0,0.05); // бордер
 	--bottom-search-border-radius: 0; // закругление бордера
 	--bottom-search-margin: 1rem; // отспупы общий
-	--bottom-search-boxshadow: 1px -1px 20px 13px rgba(17, 35, 15, 0.22); // боксшадов для формы поиска
+	--bottom-search-boxshadow: none; // боксшадов для формы поиска
 
 	// --------------- ЧЕКБОКС ПУНКТА НИЖНЕГО МУЛЬТИСЕЛЕКТА --------------
-	--bottom-option-radio-margin-right: 1.5rem; // отступ справа от чекбокса
+	--bottom-option-radio-margin-right: 0.5rem; // отступ справа от чекбокса
 	--bottom-option-radio-size: var(--font-size); // размер чекбокса
-	--bottom-option-radio-border-color: rgb(16, 154, 28); // цвет бордера
-	--bottom-option-radio-border-radius: 0rem; // закругление бордера 
-	--bottom-option-radio-active-bg: #40c979; // фон активного чекбокса
-	--bottom-option-radio-active-border-color: #40c979; // цвет бордера активного чекбокса
+	--bottom-option-radio-border-color: rgb(0,0,0,0.15); // цвет бордера
+	--bottom-option-radio-border-radius: 3px; // закругление бордера 
+	--bottom-option-radio-active-bg:var(--color-link); // фон активного чекбокса
+	--bottom-option-radio-active-border-color: var(--color-link-hover); // цвет бордера активного чекбокса
 
 	display: flex;
 	box-sizing: border-box;
@@ -143,7 +140,9 @@
 		align-items: center;
 		width: 100%;
 		font-size: var(--font-size);
-		color: var(--color-multi-main);
+		line-height: 1.25rem;
+		font-weight: 700;
+		color: var(--color-white);
 
 		&::after {
 			content: "";
@@ -152,10 +151,11 @@
 			top: 50%;
 			right: 1rem;
 			transform: translateY(-50%);
-			background-image: var(--caret-icon);
+			background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");;
 			width: var(--top-header-arrow-size);
 			height: var(--top-header-arrow-size);
 			transition: transform 0.3s ease-in-out;
+
 		}
 
 		.one-select-header-placeholder {
@@ -201,12 +201,13 @@
 	.one-select-options {
 		display: flex;
 		align-content: flex-start;
-		opacity: 1;
-		height: 0;
+		opacity: 0;
+		height: 0;			
+		visibility: hidden;		
 		overflow: hidden;
 		width: inherit;
 		transition: all 1s ease-in-out;
-		padding: var(--bottom-dropdown-padding);
+		padding: var(--bottom-dropdown-padding);		
 
 		box-sizing: border-box;
 		flex-flow: wrap;
@@ -215,12 +216,16 @@
 		top: 100%;
 		left: 0;
 		right: 0;
-		z-index: 999;
+		z-index: 200;
 		background-color: var(--bottom-dropdown-bg);
 		border-radius: var(--bottom-dropdown-border-radius);
-		box-shadow: var(--bottom-dropdown-box-shadow);
-		border: none;
-
+		box-shadow: var(--bottom-dropdown-box-shadow);		
+		transition: all 0.3s ease-in-out;
+		&.options-open{
+			opacity: 1;	
+			visibility: visible;		
+		}
+		
 		.one-select-options-only {
 			width: inherit;
 			overflow-y: auto;
@@ -288,7 +293,7 @@
 			.one-select-option-radio {
 				border-color: var(--bottom-option-radio-active-border-color);
 				background-color: var(--bottom-option-radio-active-bg);
-				background-image: var(--checkbox-icon);
+				background-image: url(../../icons/check-solid.svg);
 				background-repeat: no-repeat;
 				background-size: 60%;
 				background-position: center center;
@@ -316,7 +321,7 @@
 
 			&:focus {
 				box-shadow: var(--bottom-search-boxshadow);
-				outline: 1px solid var(--color-multi-main);
+				outline: 1px solid var(--color-link);
 			}
 
 			&::placeholder {
@@ -335,6 +340,6 @@
 		align-items: center;
 		width: 100%;
 		font-size: var(--font-size);
-		color: var(--color-multi-main);
+		color: var(--color-main);
 	}
 }

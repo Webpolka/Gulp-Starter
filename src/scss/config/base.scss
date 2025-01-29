@@ -8,24 +8,15 @@ html {
 	scroll-behavior: smooth;	
 }
 html{
-	@include adaptive-clamp(font-size, 16 ,12);
+	@include adaptive-clamp(font-size, 16, 14);
 }
-// @include mobile {  
-//     html{
-//         font-size: 10px;
-//     }
-// }
+
 body {
 	background-color: var(--color-page-bg);
 	color: var(--color-main);
 	font-family: var(--font-main);
 	text-wrap: balance;
 }
-
-img {
-	display: block;
-}
-
 code {
 	padding: 0.2rem;
 	border-radius: var(--radius);
@@ -36,6 +27,9 @@ pre.code {
 	// background-color: #e9f1f6;
 	padding: 1rem;
 	border-radius: var(--radius);
+}
+[hidden]{
+	visibility: hidden;
 }
 //-----------------------------------------------Фул скрин для тач --------------------------------------------------------
 [data-fullscreen] {
@@ -52,7 +46,7 @@ pre.code {
 // ---------------------------------------- Скролл бар настройки ----------------------------------------------------------
 * {
 	&::-webkit-scrollbar {
-		inline-size: rem(8);
+		inline-size: rem(10);
 		background-color: var(--color-white);
 	}
 
@@ -64,32 +58,24 @@ pre.code {
 
 	&::-webkit-scrollbar-thumb {
 		border-radius: var(--radius);
-		border: 0 none #fff;
-		background-color: var(--color-main);
+		border: 0 none  #fff;
+		background-color: var(--color-link);
+		cursor: pointer;
 
 		@include any-hover {
-			background-color: var(--color-main-hover);
+			background-color: var(--color-link-hover);
 		}
 	}
 }
 //-------------------------------------- Приставка для секций container -------------------------------------------------------------
 [class*="__container"] {
 	margin-inline: auto;
-	max-inline-size: rem($max-width-container);
-	padding-inline: rem($main-offset);
-}
-[class*="__grid"] {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	height: 100%;
-	margin-left: rem(- $main-offset);
-	margin-right: rem(- $main-offset);
+	max-inline-size: var(--container-width);
+	padding-inline: var(--container-padding);
 }
 
 [class*="--grid"] {
-	display: grid;
-	gap: 0 rem(30);
+	display: grid;	
 }
 
 // ====================================== Стили отзывчивых картинок (IBG) ===========================================================
@@ -103,13 +89,7 @@ pre.code {
 		object-fit: cover;
 		block-size: 100%;
 		inline-size: 100%;
-	}
-
-	&_contain {
-		img {
-			object-fit: contain;
-		}
-	}
+	}	
 }
 
 // ===================================================== Оболочка ===================================================================
@@ -134,10 +114,6 @@ pre.code {
 		block-size: rem(2);
 		inline-size: 100%;
 		background: transparent;
-	}
-
-	// &_start {
-	// 	padding-block-start: rem($header-height);
-	// }
+	}	
 }
 // ------------------------------------------------------------------------------------------------------------------------------------

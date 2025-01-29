@@ -1,0 +1,72 @@
+.section-three {
+    background-color: rgb(243, 245, 244);
+
+    .sections-content {
+        ul {
+            li {
+                margin-bottom: rem(40);
+                padding-left: rem(75);
+                position: relative;
+                &:before{
+                    position: absolute;
+                    content: "";
+                    top: rem(10);
+                    left: 0;
+                    width: rem(50);
+                    height: rem(50);
+                    background-color: rgb(227, 230, 238);                        
+                    background-position: center center; /* x y */
+                    background-size: 75%;
+                    background-repeat: no-repeat;                    
+                }
+                &:nth-child(1):before{
+                    background-image: url('../../icons/sec-2-i-1.svg');
+                }
+                &:nth-child(2):before{
+                    background-image: url('../../icons/sec-2-i-2.svg');
+                }
+                &:nth-child(3):before{
+                    background-size: 40%;
+                    background-image: url('../../icons/sec-2-i-3.svg');
+                }
+
+                .li-title {
+                    color: var(--color-title);
+                    font-size: rem(18);
+                    line-height: rem(20);
+                    font-weight: 700;
+                }
+                small {
+                    color: var(--color-black);
+                    font-size: rem(14);
+                    line-height: rem(20);
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    .picture-items {
+        padding-top: 2rem;
+
+        &__1 {
+            border-radius: 0 rem(60) 0 rem(60);
+            overflow: hidden;
+        }
+
+        &__2 img {
+            border-radius: rem(60) 0 rem(60) 0;
+            overflow: hidden;
+        }
+
+        &__3 img {
+            border-radius: rem(60) 0 rem(60) 0;
+            overflow: hidden;
+        }
+
+        &__4 img {
+            border-radius: 0 rem(60) 0 rem(60);
+            overflow: hidden;
+        }
+    }
+}

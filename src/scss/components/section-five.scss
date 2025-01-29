@@ -1,0 +1,101 @@
+.section-five {
+    background-color: rgb(243, 245, 244);
+    padding: rem(80) 0 rem(100);
+
+    @include xl {
+        padding: rem(50) 0 rem(60);
+    }
+
+    .sections-content {}
+
+    .comment {
+        text-align: left;
+        background-color: var(--color-white);        
+        overflow: hidden;
+        padding: rem(16);
+        border-radius: rem(40);        
+        @include lg {
+            border-radius: rem(25);
+        }
+        @include md {
+            border-radius: rem(40);
+        }
+
+        .comment-img {           
+            overflow: hidden;
+            display: flex;
+            justify-content: center;  
+            border-radius: rem(30);        
+            @include lg {
+                border-radius: rem(20);
+            }
+            @include md {
+                margin-bottom: 1.5rem;
+                border-radius: rem(30);
+            }        
+        }
+
+        .comment-title h3 {
+            font-size: rem(24);
+            line-height: rem(32);
+            font-weight: 700;
+            letter-spacing: 0;
+            color: var(--color-title);
+            padding-top: rem(16);
+            margin-bottom: rem(24);
+        }
+
+        .comment-text p{
+            font-size: rem(15);
+            line-height: rem(20);
+            font-weight: 400;
+            letter-spacing: 0;
+            color: var(--color-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-date span {
+            font-size: rem(14);
+            line-height: rem(20);
+            font-weight: 700;
+            letter-spacing: 0;
+            color: rgb(242, 190, 34);
+            text-transform: uppercase;
+        }
+
+        .comment-read a {
+            font-size: rem(14);
+            line-height: rem(20);
+            font-weight: 700;
+            letter-spacing: 0;
+            color: var(--color-btn);
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                color: var(--color-btn-hover);
+            }
+        }
+
+
+
+        .flex {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .flex-bottom {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    }
+
+    .btn-main {
+        margin-top: rem(50);
+
+        @include xl {
+            margin-top: rem(30);
+        }
+    }
+}
